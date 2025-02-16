@@ -145,7 +145,7 @@ initial begin
     $finish;
 end
 
-//Generate VCD file for waveform viewing
+//Generate VCD file for waveform viewing.
 initial begin
     $fsdbDumpfile("waves.fsdb");
     $fsdbDumpvars(0, norm_tb);  
