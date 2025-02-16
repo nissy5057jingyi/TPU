@@ -171,8 +171,11 @@ initial begin
     $finish;
 end
 
-// Optional: Generate VCD file for waveform viewing
+//Generate VCD file for waveform viewing
 initial begin
+    $fsdbDumpfile("waves.fsdb");
+    $fsdbDumpvars(0, pool_tb);  
+    $fsdbDumpMDA();
     $dumpfile("pool_tb.vcd");
     $dumpvars(0, pool_tb);
 end
