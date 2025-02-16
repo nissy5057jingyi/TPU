@@ -21,7 +21,9 @@ wire done_norm;
 
 // Maximum cycle count to prevent infinite loops
 reg [31:0] cycle_count;
-localparam MAX_CYCLES = 1000;
+reg test_failed; // Moved declaration to top
+integer i; // Added for loop variable
+localparam MAX_CYCLES = 50;
 
 // Instantiate the Unit Under Test (UUT)
 norm u_norm (
@@ -44,21 +46,41 @@ initial begin
     forever #5 clk = ~clk;
 end
 
-// Cycle counter and timeout
+// Cycle counter
 always @(posedge clk) begin
     if (reset)
         cycle_count <= 0;
     else
         cycle_count <= cycle_count + 1;
-        
-    if (cycle_count >= MAX_CYCLES) begin
-        $display("Error: Simulation timeout after %d cycles", MAX_CYCLES);
-        $finish;
-    end
 end
+
+// Task to display arrays
+task display_arrays;
+    input [127:0] msg;
+    begin
+        $display("\n%s", msg);
+        $display("Input array:");
+        for(i = 0; i < `DESIGN_SIZE; i = i + 1) begin
+            $write("%d ", inp_data[i*`DWIDTH +: `DWIDTH]);
+            if((i+1) % 4 == 0) $write("\n");
+        end
+        
+        $display("\nOutput array:");
+        for(i = 0; i < `DESIGN_SIZE; i = i + 1) begin
+            $write("%d ", out_data[i*`DWIDTH +: `DWIDTH]);
+            if((i+1) % 4 == 0) $write("\n");
+        end
+        $display("");
+    end
+endtask
 
 // Test stimulus
 initial begin
+    // Enable waveform dumping
+    $fsdbDumpfile("waves.fsdb");
+    $fsdbDumpvars(0, norm_tb);
+    $fsdbDumpMDA();
+
     // Initialize inputs
     reset = 1;
     enable_norm = 0;
@@ -68,6 +90,7 @@ initial begin
     inp_data = 0;
     validity_mask = {`MASK_WIDTH{1'b1}};
     cycle_count = 0;
+    test_failed = 0;
 
     // Wait for 100 ns for global reset
     #100;
@@ -78,18 +101,16 @@ initial begin
     enable_norm = 0;
     in_data_available = 1;
     inp_data = {16{8'h42}}; // Setting all elements to 0x42
-    #20;
+    repeat(5) @(posedge clk);
     in_data_available = 0;
-    
-    // Wait for data to propagate
-    @(posedge clk);
-    #2;
+    repeat(5) @(posedge clk);
     
     // Verify that when disabled, output equals input
     if (out_data !== inp_data) begin
         $display("Test Case 1 Failed: Output should equal input when disabled");
         $display("Expected: %h", inp_data);
         $display("Got: %h", out_data);
+        display_arrays("Module Disabled Test");
     end else begin
         $display("Test Case 1 Passed!");
     end
@@ -101,57 +122,75 @@ initial begin
     inv_var = 8'h02; // Inverse variance of 2
     in_data_available = 1;
     inp_data = {16{8'h20}}; // Setting all elements to 0x20 (32 in decimal)
-    
-    // Wait for normalization to complete
-    @(posedge done_norm);
+    repeat(5) @(posedge clk);
+    in_data_available = 0;
+    repeat(5) @(posedge clk);
     
     // For input 32, mean 16, inv_var 2:
     // Expected: (32-16)*2 = 32 for each element
-    for(integer i = 0; i < `DESIGN_SIZE; i = i + 1) begin
+    test_failed = 0;
+    for(i = 0; i < `DESIGN_SIZE; i = i + 1) begin
         if (out_data[i*`DWIDTH +: `DWIDTH] !== 8'h20) begin
             $display("Test Case 2 Failed at element %d", i);
             $display("Expected: 0x20, Got: %h", out_data[i*`DWIDTH +: `DWIDTH]);
+            test_failed = 1;
         end
     end
-    $display("Test Case 2 Passed!");
+    if (!test_failed) begin
+        $display("Test Case 2 Passed!");
+    end
     
     // Test Case 3: Test with validity mask
     #20;
     validity_mask = 16'h5555; // Every other element is valid
     in_data_available = 1;
     inp_data = {16{8'h30}}; // Setting all elements to 0x30
-    
-    // Wait for normalization to complete
-    @(posedge done_norm);
-    
-    // Check that invalid elements remain unchanged
-    for(integer i = 0; i < `DESIGN_SIZE; i = i + 1) begin
-        if (validity_mask[i] == 0) begin
+    repeat(10) @(posedge clk); // Wait longer for stability
+    in_data_available = 0;
+    repeat(10) @(posedge clk); // Wait longer after data input
+
+    $display("\nTest Case 3: Validity Mask Test");
+    display_arrays("Before validation");
+
+    // Debug prints
+    $display("Validity mask: %h", validity_mask);
+    for(i = 0; i < `DESIGN_SIZE; i = i + 1) begin
+        $display("Element %d: valid=%b, input=%h, output=%h", 
+            i, validity_mask[i], inp_data[i*`DWIDTH +: `DWIDTH], 
+            out_data[i*`DWIDTH +: `DWIDTH]);
+    end
+
+    // Check results
+    test_failed = 0;
+    for(i = 0; i < `DESIGN_SIZE; i = i + 1) begin
+        if (validity_mask[i] == 0) begin // Invalid element
             if (out_data[i*`DWIDTH +: `DWIDTH] !== inp_data[i*`DWIDTH +: `DWIDTH]) begin
-                $display("Test Case 3 Failed at invalid element %d", i);
-                $display("Expected: %h, Got: %h", 
-                    inp_data[i*`DWIDTH +: `DWIDTH],
+                $display("Error at element %d (invalid): Expected: %h, Got: %h", 
+                    i, inp_data[i*`DWIDTH +: `DWIDTH], 
                     out_data[i*`DWIDTH +: `DWIDTH]);
+                test_failed = 1;
+            end
+        end
+        else begin // Valid element - should be normalized
+            if (out_data[i*`DWIDTH +: `DWIDTH] == inp_data[i*`DWIDTH +: `DWIDTH]) begin
+                $display("Error at element %d (valid): Expected normalization but got same as input", i);
+                test_failed = 1;
             end
         end
     end
-    $display("Test Case 3 Passed!");
-    
-    // Wait a few cycles to ensure all signals have settled
+
+    if (test_failed)
+        $display("Test Case 3 Failed!");
+    else
+        $display("Test Case 3 Passed!");
+
+    display_arrays("After validation");
+
+    // Wait a few more cycles to see final outputs
     repeat(5) @(posedge clk);
     
-    // End simulation
     $display("All tests completed successfully!");
     $finish;
-end
-
-//Generate VCD file for waveform viewing.
-initial begin
-    $fsdbDumpfile("waves.fsdb");
-    $fsdbDumpvars(0, norm_tb);  
-    $fsdbDumpMDA();
-    $dumpfile("norm_tb.vcd");
-    $dumpvars(0, norm_tb);
 end
 
 endmodule

@@ -2,21 +2,405 @@ Info: [VCS_SAVE_RESTORE_INFO] ASLR (Address Space Layout Randomization) is detec
 Please use '-no_save' simv switch to avoid re-execution or '-suppress=ASLR_DETECTED_INFO' to suppress this message.
 Chronologic VCS simulator copyright 1991-2023
 Contains Synopsys proprietary information.
-Compiler version U-2023.03-SP2-1_Full64; Runtime version U-2023.03-SP2-1_Full64;  Feb 16 13:38 2025
-*Verdi* Loading libsscore_vcs202303.so
-FSDB Dumper for VCS, Release Verdi_U-2023.03-SP2-1, Linux x86_64/64bit, 10/11/2023
-(C) 1996 - 2023 by Synopsys, Inc.
-*Verdi* : Create FSDB file 'waves.fsdb'
-*Verdi* : Begin traversing the scope (pool_tb), layer (0).
-*Verdi* : End of traversing.
-*Verdi* : Begin traversing the MDAs, layer (0).
-*Verdi* : Enable +mda and +packedmda dumping.
-*Verdi* : End of traversing the MDAs.
+Compiler version U-2023.03-SP2-1_Full64; Runtime version U-2023.03-SP2-1_Full64;  Feb 16 18:29 2025
+
+=== Test Case 1: Module Disabled (Bypass Mode) ===
+
+Bypass Mode Test
+Input array:
+  1   2   3   4 
+  5   6   7   8 
+  9  10  11  12 
+ 13  14  15  16 
+
+Output array:
+  1   2   3   4 
+  5   6   7   8 
+  9  10  11  12 
+ 13  14  15  16 
+
 Test Case 1 Passed: Bypass mode working correctly
-Error: Simulation timeout after        1000 cycles
-$finish called from file "pool_tb.v", line 55.
-$finish at simulation time             10105000
+
+=== Test Case 2: 1x1 Pooling ===
+Initial status:
+enable_pool = 1
+pool_window_size = 1
+in_data_available = 1
+out_data_available = 0
+
+1x1 Pooling Test
+Input array:
+  1   2   3   4 
+  5   6   7   8 
+  9  10  11  12 
+ 13  14  15  16 
+
+Output array:
+  1   2   3   4 
+  5   6   7   8 
+  9  10  11  12 
+ 13  14  15  16 
+
+Mismatch at (0,1): Expected x, Got x
+Mismatch at (1,1): Expected x, Got x
+Mismatch at (2,1): Expected x, Got x
+Mismatch at (3,1): Expected x, Got x
+Mismatch at (4,1): Expected x, Got x
+Mismatch at (5,1): Expected x, Got x
+Mismatch at (6,1): Expected x, Got x
+Mismatch at (7,1): Expected x, Got x
+Mismatch at (8,1): Expected x, Got x
+Mismatch at (9,1): Expected x, Got x
+Mismatch at (10,1): Expected x, Got x
+Mismatch at (11,1): Expected x, Got x
+Mismatch at (12,1): Expected x, Got x
+Mismatch at (13,1): Expected x, Got x
+Mismatch at (14,1): Expected x, Got x
+Mismatch at (15,1): Expected x, Got x
+Mismatch at (0,2): Expected x, Got x
+Mismatch at (1,2): Expected x, Got x
+Mismatch at (2,2): Expected x, Got x
+Mismatch at (3,2): Expected x, Got x
+Mismatch at (4,2): Expected x, Got x
+Mismatch at (5,2): Expected x, Got x
+Mismatch at (6,2): Expected x, Got x
+Mismatch at (7,2): Expected x, Got x
+Mismatch at (8,2): Expected x, Got x
+Mismatch at (9,2): Expected x, Got x
+Mismatch at (10,2): Expected x, Got x
+Mismatch at (11,2): Expected x, Got x
+Mismatch at (12,2): Expected x, Got x
+Mismatch at (13,2): Expected x, Got x
+Mismatch at (14,2): Expected x, Got x
+Mismatch at (15,2): Expected x, Got x
+Mismatch at (0,3): Expected x, Got x
+Mismatch at (1,3): Expected x, Got x
+Mismatch at (2,3): Expected x, Got x
+Mismatch at (3,3): Expected x, Got x
+Mismatch at (4,3): Expected x, Got x
+Mismatch at (5,3): Expected x, Got x
+Mismatch at (6,3): Expected x, Got x
+Mismatch at (7,3): Expected x, Got x
+Mismatch at (8,3): Expected x, Got x
+Mismatch at (9,3): Expected x, Got x
+Mismatch at (10,3): Expected x, Got x
+Mismatch at (11,3): Expected x, Got x
+Mismatch at (12,3): Expected x, Got x
+Mismatch at (13,3): Expected x, Got x
+Mismatch at (14,3): Expected x, Got x
+Mismatch at (15,3): Expected x, Got x
+Mismatch at (0,4): Expected x, Got x
+Mismatch at (1,4): Expected x, Got x
+Mismatch at (2,4): Expected x, Got x
+Mismatch at (3,4): Expected x, Got x
+Mismatch at (4,4): Expected x, Got x
+Mismatch at (5,4): Expected x, Got x
+Mismatch at (6,4): Expected x, Got x
+Mismatch at (7,4): Expected x, Got x
+Mismatch at (8,4): Expected x, Got x
+Mismatch at (9,4): Expected x, Got x
+Mismatch at (10,4): Expected x, Got x
+Mismatch at (11,4): Expected x, Got x
+Mismatch at (12,4): Expected x, Got x
+Mismatch at (13,4): Expected x, Got x
+Mismatch at (14,4): Expected x, Got x
+Mismatch at (15,4): Expected x, Got x
+Mismatch at (0,5): Expected x, Got x
+Mismatch at (1,5): Expected x, Got x
+Mismatch at (2,5): Expected x, Got x
+Mismatch at (3,5): Expected x, Got x
+Mismatch at (4,5): Expected x, Got x
+Mismatch at (5,5): Expected x, Got x
+Mismatch at (6,5): Expected x, Got x
+Mismatch at (7,5): Expected x, Got x
+Mismatch at (8,5): Expected x, Got x
+Mismatch at (9,5): Expected x, Got x
+Mismatch at (10,5): Expected x, Got x
+Mismatch at (11,5): Expected x, Got x
+Mismatch at (12,5): Expected x, Got x
+Mismatch at (13,5): Expected x, Got x
+Mismatch at (14,5): Expected x, Got x
+Mismatch at (15,5): Expected x, Got x
+Mismatch at (0,6): Expected x, Got x
+Mismatch at (1,6): Expected x, Got x
+Mismatch at (2,6): Expected x, Got x
+Mismatch at (3,6): Expected x, Got x
+Mismatch at (4,6): Expected x, Got x
+Mismatch at (5,6): Expected x, Got x
+Mismatch at (6,6): Expected x, Got x
+Mismatch at (7,6): Expected x, Got x
+Mismatch at (8,6): Expected x, Got x
+Mismatch at (9,6): Expected x, Got x
+Mismatch at (10,6): Expected x, Got x
+Mismatch at (11,6): Expected x, Got x
+Mismatch at (12,6): Expected x, Got x
+Mismatch at (13,6): Expected x, Got x
+Mismatch at (14,6): Expected x, Got x
+Mismatch at (15,6): Expected x, Got x
+Mismatch at (0,7): Expected x, Got x
+Mismatch at (1,7): Expected x, Got x
+Mismatch at (2,7): Expected x, Got x
+Mismatch at (3,7): Expected x, Got x
+Mismatch at (4,7): Expected x, Got x
+Mismatch at (5,7): Expected x, Got x
+Mismatch at (6,7): Expected x, Got x
+Mismatch at (7,7): Expected x, Got x
+Mismatch at (8,7): Expected x, Got x
+Mismatch at (9,7): Expected x, Got x
+Mismatch at (10,7): Expected x, Got x
+Mismatch at (11,7): Expected x, Got x
+Mismatch at (12,7): Expected x, Got x
+Mismatch at (13,7): Expected x, Got x
+Mismatch at (14,7): Expected x, Got x
+Mismatch at (15,7): Expected x, Got x
+Mismatch at (0,8): Expected x, Got x
+Mismatch at (1,8): Expected x, Got x
+Mismatch at (2,8): Expected x, Got x
+Mismatch at (3,8): Expected x, Got x
+Mismatch at (4,8): Expected x, Got x
+Mismatch at (5,8): Expected x, Got x
+Mismatch at (6,8): Expected x, Got x
+Mismatch at (7,8): Expected x, Got x
+Mismatch at (8,8): Expected x, Got x
+Mismatch at (9,8): Expected x, Got x
+Mismatch at (10,8): Expected x, Got x
+Mismatch at (11,8): Expected x, Got x
+Mismatch at (12,8): Expected x, Got x
+Mismatch at (13,8): Expected x, Got x
+Mismatch at (14,8): Expected x, Got x
+Mismatch at (15,8): Expected x, Got x
+Mismatch at (0,9): Expected x, Got x
+Mismatch at (1,9): Expected x, Got x
+Mismatch at (2,9): Expected x, Got x
+Mismatch at (3,9): Expected x, Got x
+Mismatch at (4,9): Expected x, Got x
+Mismatch at (5,9): Expected x, Got x
+Mismatch at (6,9): Expected x, Got x
+Mismatch at (7,9): Expected x, Got x
+Mismatch at (8,9): Expected x, Got x
+Mismatch at (9,9): Expected x, Got x
+Mismatch at (10,9): Expected x, Got x
+Mismatch at (11,9): Expected x, Got x
+Mismatch at (12,9): Expected x, Got x
+Mismatch at (13,9): Expected x, Got x
+Mismatch at (14,9): Expected x, Got x
+Mismatch at (15,9): Expected x, Got x
+Mismatch at (0,10): Expected x, Got x
+Mismatch at (1,10): Expected x, Got x
+Mismatch at (2,10): Expected x, Got x
+Mismatch at (3,10): Expected x, Got x
+Mismatch at (4,10): Expected x, Got x
+Mismatch at (5,10): Expected x, Got x
+Mismatch at (6,10): Expected x, Got x
+Mismatch at (7,10): Expected x, Got x
+Mismatch at (8,10): Expected x, Got x
+Mismatch at (9,10): Expected x, Got x
+Mismatch at (10,10): Expected x, Got x
+Mismatch at (11,10): Expected x, Got x
+Mismatch at (12,10): Expected x, Got x
+Mismatch at (13,10): Expected x, Got x
+Mismatch at (14,10): Expected x, Got x
+Mismatch at (15,10): Expected x, Got x
+Mismatch at (0,11): Expected x, Got x
+Mismatch at (1,11): Expected x, Got x
+Mismatch at (2,11): Expected x, Got x
+Mismatch at (3,11): Expected x, Got x
+Mismatch at (4,11): Expected x, Got x
+Mismatch at (5,11): Expected x, Got x
+Mismatch at (6,11): Expected x, Got x
+Mismatch at (7,11): Expected x, Got x
+Mismatch at (8,11): Expected x, Got x
+Mismatch at (9,11): Expected x, Got x
+Mismatch at (10,11): Expected x, Got x
+Mismatch at (11,11): Expected x, Got x
+Mismatch at (12,11): Expected x, Got x
+Mismatch at (13,11): Expected x, Got x
+Mismatch at (14,11): Expected x, Got x
+Mismatch at (15,11): Expected x, Got x
+Mismatch at (0,12): Expected x, Got x
+Mismatch at (1,12): Expected x, Got x
+Mismatch at (2,12): Expected x, Got x
+Mismatch at (3,12): Expected x, Got x
+Mismatch at (4,12): Expected x, Got x
+Mismatch at (5,12): Expected x, Got x
+Mismatch at (6,12): Expected x, Got x
+Mismatch at (7,12): Expected x, Got x
+Mismatch at (8,12): Expected x, Got x
+Mismatch at (9,12): Expected x, Got x
+Mismatch at (10,12): Expected x, Got x
+Mismatch at (11,12): Expected x, Got x
+Mismatch at (12,12): Expected x, Got x
+Mismatch at (13,12): Expected x, Got x
+Mismatch at (14,12): Expected x, Got x
+Mismatch at (15,12): Expected x, Got x
+Mismatch at (0,13): Expected x, Got x
+Mismatch at (1,13): Expected x, Got x
+Mismatch at (2,13): Expected x, Got x
+Mismatch at (3,13): Expected x, Got x
+Mismatch at (4,13): Expected x, Got x
+Mismatch at (5,13): Expected x, Got x
+Mismatch at (6,13): Expected x, Got x
+Mismatch at (7,13): Expected x, Got x
+Mismatch at (8,13): Expected x, Got x
+Mismatch at (9,13): Expected x, Got x
+Mismatch at (10,13): Expected x, Got x
+Mismatch at (11,13): Expected x, Got x
+Mismatch at (12,13): Expected x, Got x
+Mismatch at (13,13): Expected x, Got x
+Mismatch at (14,13): Expected x, Got x
+Mismatch at (15,13): Expected x, Got x
+Mismatch at (0,14): Expected x, Got x
+Mismatch at (1,14): Expected x, Got x
+Mismatch at (2,14): Expected x, Got x
+Mismatch at (3,14): Expected x, Got x
+Mismatch at (4,14): Expected x, Got x
+Mismatch at (5,14): Expected x, Got x
+Mismatch at (6,14): Expected x, Got x
+Mismatch at (7,14): Expected x, Got x
+Mismatch at (8,14): Expected x, Got x
+Mismatch at (9,14): Expected x, Got x
+Mismatch at (10,14): Expected x, Got x
+Mismatch at (11,14): Expected x, Got x
+Mismatch at (12,14): Expected x, Got x
+Mismatch at (13,14): Expected x, Got x
+Mismatch at (14,14): Expected x, Got x
+Mismatch at (15,14): Expected x, Got x
+Mismatch at (0,15): Expected x, Got x
+Mismatch at (1,15): Expected x, Got x
+Mismatch at (2,15): Expected x, Got x
+Mismatch at (3,15): Expected x, Got x
+Mismatch at (4,15): Expected x, Got x
+Mismatch at (5,15): Expected x, Got x
+Mismatch at (6,15): Expected x, Got x
+Mismatch at (7,15): Expected x, Got x
+Mismatch at (8,15): Expected x, Got x
+Mismatch at (9,15): Expected x, Got x
+Mismatch at (10,15): Expected x, Got x
+Mismatch at (11,15): Expected x, Got x
+Mismatch at (12,15): Expected x, Got x
+Mismatch at (13,15): Expected x, Got x
+Mismatch at (14,15): Expected x, Got x
+Mismatch at (15,15): Expected x, Got x
+Pooling test failed for window size 1
+
+=== Test Case 3: 2x2 Pooling ===
+
+2x2 Pooling Test
+Input array:
+  0   1   2   3 
+  4   5   6   7 
+  8   9  10  11 
+ 12  13  14  15 
+
+Output array:
+  0   0   0   0 
+  0   0   0   0 
+  0   0   0   0 
+  0   0   0   0 
+
+Mismatch at (0,0): Expected x, Got 0
+Mismatch at (1,0): Expected x, Got 0
+Mismatch at (2,0): Expected x, Got 0
+Mismatch at (3,0): Expected x, Got 0
+Mismatch at (4,0): Expected x, Got 0
+Mismatch at (5,0): Expected x, Got 0
+Mismatch at (6,0): Expected x, Got 0
+Mismatch at (7,0): Expected x, Got 0
+Mismatch at (0,1): Expected x, Got x
+Mismatch at (1,1): Expected x, Got x
+Mismatch at (2,1): Expected x, Got x
+Mismatch at (3,1): Expected x, Got x
+Mismatch at (4,1): Expected x, Got x
+Mismatch at (5,1): Expected x, Got x
+Mismatch at (6,1): Expected x, Got x
+Mismatch at (7,1): Expected x, Got x
+Mismatch at (0,2): Expected x, Got x
+Mismatch at (1,2): Expected x, Got x
+Mismatch at (2,2): Expected x, Got x
+Mismatch at (3,2): Expected x, Got x
+Mismatch at (4,2): Expected x, Got x
+Mismatch at (5,2): Expected x, Got x
+Mismatch at (6,2): Expected x, Got x
+Mismatch at (7,2): Expected x, Got x
+Mismatch at (0,3): Expected x, Got x
+Mismatch at (1,3): Expected x, Got x
+Mismatch at (2,3): Expected x, Got x
+Mismatch at (3,3): Expected x, Got x
+Mismatch at (4,3): Expected x, Got x
+Mismatch at (5,3): Expected x, Got x
+Mismatch at (6,3): Expected x, Got x
+Mismatch at (7,3): Expected x, Got x
+Mismatch at (0,4): Expected x, Got x
+Mismatch at (1,4): Expected x, Got x
+Mismatch at (2,4): Expected x, Got x
+Mismatch at (3,4): Expected x, Got x
+Mismatch at (4,4): Expected x, Got x
+Mismatch at (5,4): Expected x, Got x
+Mismatch at (6,4): Expected x, Got x
+Mismatch at (7,4): Expected x, Got x
+Mismatch at (0,5): Expected x, Got x
+Mismatch at (1,5): Expected x, Got x
+Mismatch at (2,5): Expected x, Got x
+Mismatch at (3,5): Expected x, Got x
+Mismatch at (4,5): Expected x, Got x
+Mismatch at (5,5): Expected x, Got x
+Mismatch at (6,5): Expected x, Got x
+Mismatch at (7,5): Expected x, Got x
+Mismatch at (0,6): Expected x, Got x
+Mismatch at (1,6): Expected x, Got x
+Mismatch at (2,6): Expected x, Got x
+Mismatch at (3,6): Expected x, Got x
+Mismatch at (4,6): Expected x, Got x
+Mismatch at (5,6): Expected x, Got x
+Mismatch at (6,6): Expected x, Got x
+Mismatch at (7,6): Expected x, Got x
+Mismatch at (0,7): Expected x, Got x
+Mismatch at (1,7): Expected x, Got x
+Mismatch at (2,7): Expected x, Got x
+Mismatch at (3,7): Expected x, Got x
+Mismatch at (4,7): Expected x, Got x
+Mismatch at (5,7): Expected x, Got x
+Mismatch at (6,7): Expected x, Got x
+Mismatch at (7,7): Expected x, Got x
+Pooling test failed for window size 2
+
+=== Test Case 4: 4x4 Pooling ===
+
+4x4 Pooling Test
+Input array:
+  0   1   2   3 
+  4   5   6   7 
+  8   9  10  11 
+ 12  13  14  15 
+
+Output array:
+  1   0   0   0 
+  0   0   0   0 
+  0   0   0   0 
+  0   0   0   0 
+
+Mismatch at (0,0): Expected x, Got 1
+Mismatch at (1,0): Expected x, Got 0
+Mismatch at (2,0): Expected x, Got 0
+Mismatch at (3,0): Expected x, Got 0
+Mismatch at (0,1): Expected x, Got x
+Mismatch at (1,1): Expected x, Got x
+Mismatch at (2,1): Expected x, Got x
+Mismatch at (3,1): Expected x, Got x
+Mismatch at (0,2): Expected x, Got x
+Mismatch at (1,2): Expected x, Got x
+Mismatch at (2,2): Expected x, Got x
+Mismatch at (3,2): Expected x, Got x
+Mismatch at (0,3): Expected x, Got x
+Mismatch at (1,3): Expected x, Got x
+Mismatch at (2,3): Expected x, Got x
+Mismatch at (3,3): Expected x, Got x
+Pooling test failed for window size 4
+
+All tests completed!
+$finish called from file "pool_tb.v", line 194.
+$finish at simulation time               545000
            V C S   S i m u l a t i o n   R e p o r t 
-Time: 10105000 ps
-CPU Time:      0.290 seconds;       Data structure size:   0.0Mb
-Sun Feb 16 13:38:39 2025
+Time: 545000 ps
+CPU Time:      0.270 seconds;       Data structure size:   0.0Mb
+Sun Feb 16 18:29:46 2025

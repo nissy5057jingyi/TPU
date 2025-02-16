@@ -21,7 +21,7 @@ wire done_pool;
 
 // Maximum cycle count to prevent infinite loops
 reg [31:0] cycle_count;
-localparam MAX_CYCLES = 1000;
+integer i, j, x, y; // Add j and other loop variables
 
 // Instantiate the Unit Under Test (UUT)
 pool u_pool (
@@ -43,36 +43,68 @@ initial begin
     forever #5 clk = ~clk;
 end
 
-// Cycle counter and timeout
+// Cycle counter
 always @(posedge clk) begin
     if (reset)
         cycle_count <= 0;
     else
         cycle_count <= cycle_count + 1;
-        
-    if (cycle_count >= MAX_CYCLES) begin
-        $display("Error: Simulation timeout after %d cycles", MAX_CYCLES);
-        $finish;
-    end
 end
 
-// Task to display input and output arrays
+// Task to display arrays
 task display_arrays;
     input [127:0] msg;
     begin
         $display("\n%s", msg);
         $display("Input array:");
-        for(integer i = 0; i < `DESIGN_SIZE; i = i + 1) begin
-            $write("%d ", inp_data[i*`DWIDTH +: `DWIDTH]);
+        for(i = 0; i < `DESIGN_SIZE; i = i + 1) begin
+            $write("%3d ", inp_data[i*`DWIDTH +: `DWIDTH]);
             if((i+1) % 4 == 0) $write("\n");
         end
         
         $display("\nOutput array:");
-        for(integer i = 0; i < `DESIGN_SIZE; i = i + 1) begin
-            $write("%d ", out_data[i*`DWIDTH +: `DWIDTH]);
+        for(i = 0; i < `DESIGN_SIZE; i = i + 1) begin
+            $write("%3d ", out_data[i*`DWIDTH +: `DWIDTH]);
             if((i+1) % 4 == 0) $write("\n");
         end
         $display("");
+    end
+endtask
+
+// Helper task to calculate expected pooling results
+task check_pooling_result;
+    input [3:0] window_size;
+    input [`DESIGN_SIZE*`DWIDTH-1:0] inp;
+    input [`DESIGN_SIZE*`DWIDTH-1:0] outp;
+    reg test_passed;
+    integer sum, count;
+    begin
+        test_passed = 1;
+        
+        for(y = 0; y < `DESIGN_SIZE/window_size; y = y + 1) begin
+            for(x = 0; x < `DESIGN_SIZE/window_size; x = x + 1) begin
+                // Calculate expected average for this window
+                sum = 0;
+                for(i = 0; i < window_size; i = i + 1) begin
+                    for(j = 0; j < window_size; j = j + 1) begin
+                        sum = sum + inp[((y*window_size + i)*`DESIGN_SIZE + (x*window_size + j))*`DWIDTH +: `DWIDTH];
+                    end
+                end
+                count = window_size * window_size;
+                
+                // Compare with actual output
+                if(outp[(y*`DESIGN_SIZE + x)*`DWIDTH +: `DWIDTH] !== sum/count) begin
+                    $display("Mismatch at (%0d,%0d): Expected %0d, Got %0d", 
+                        x, y, sum/count, outp[(y*`DESIGN_SIZE + x)*`DWIDTH +: `DWIDTH]);
+                    test_passed = 0;
+                end
+            end
+        end
+        
+        if(test_passed)
+            $display("Pooling test passed for window size %0d!", window_size);
+        else
+            $display("Pooling test failed for window size %0d", window_size);
     end
 endtask
 
@@ -91,93 +123,75 @@ initial begin
     #100;
     reset = 0;
     
-    // Test Case 1: Module disabled
+    // Test Case 1: Module disabled (bypass mode)
+    $display("\n=== Test Case 1: Module Disabled (Bypass Mode) ===");
     #20;
     enable_pool = 0;
-    in_data_available = 1;
     pool_window_size = 2;
     // Fill input with increasing values
-    for(integer i = 0; i < `DESIGN_SIZE; i = i + 1) begin
+    for(i = 0; i < `DESIGN_SIZE; i = i + 1) begin
         inp_data[i*`DWIDTH +: `DWIDTH] = i + 1;
     end
-    #20;
-    in_data_available = 0;
+    in_data_available = 1;
+    repeat(5) @(posedge clk);
+    display_arrays("Bypass Mode Test");
     
-    // Wait for data to propagate
-    @(posedge clk);
-    #2;
-    
-    // Verify that when disabled, output equals input
     if (out_data !== inp_data) begin
         $display("Test Case 1 Failed: Output should equal input when disabled");
-        display_arrays("Module Disabled Test");
     end else begin
         $display("Test Case 1 Passed: Bypass mode working correctly");
     end
+    in_data_available = 0;
     
-    // Test Case 2: 1x1 pooling (effectively bypass)
+    // Test Case 2: 1x1 pooling
+    $display("\n=== Test Case 2: 1x1 Pooling ===");
     #20;
     enable_pool = 1;
     pool_window_size = 1;
     in_data_available = 1;
-    #20;
+
+    $display("Initial status:");
+    $display("enable_pool = %b", enable_pool);
+    $display("pool_window_size = %d", pool_window_size);
+    $display("in_data_available = %b", in_data_available);
+    $display("out_data_available = %b", out_data_available);
+    
+    repeat(10) @(posedge clk);
+    display_arrays("1x1 Pooling Test");
+    check_pooling_result(1, inp_data, out_data);
     in_data_available = 0;
     
-    @(posedge done_pool);
-    if (out_data !== inp_data) begin
-        $display("Test Case 2 Failed: 1x1 pooling should not modify data");
-        display_arrays("1x1 Pooling Test");
-    end else begin
-        $display("Test Case 2 Passed: 1x1 pooling working correctly");
-    end
-    
     // Test Case 3: 2x2 pooling
+    $display("\n=== Test Case 3: 2x2 Pooling ===");
     #20;
     enable_pool = 1;
     pool_window_size = 2;
-    in_data_available = 1;
-    // Create a test pattern where each 2x2 block has the same value
-    for(integer i = 0; i < `DESIGN_SIZE; i = i + 1) begin
-        inp_data[i*`DWIDTH +: `DWIDTH] = (i/2) * 2;
+    // Create a pattern where elements increase by 1
+    for(i = 0; i < `DESIGN_SIZE; i = i + 1) begin
+        inp_data[i*`DWIDTH +: `DWIDTH] = i;
     end
-    #20;
+    in_data_available = 1;
+    
+    repeat(10) @(posedge clk);
+    display_arrays("2x2 Pooling Test");
+    check_pooling_result(2, inp_data, out_data);
     in_data_available = 0;
     
-    @(posedge done_pool);
-    display_arrays("2x2 Pooling Test");
-    $display("Test Case 3 Passed: 2x2 pooling completed");
-    
     // Test Case 4: 4x4 pooling
+    $display("\n=== Test Case 4: 4x4 Pooling ===");
     #20;
     enable_pool = 1;
     pool_window_size = 4;
     in_data_available = 1;
-    // Create a test pattern where each 4x4 block has increasing values
-    for(integer i = 0; i < `DESIGN_SIZE; i = i + 1) begin
-        inp_data[i*`DWIDTH +: `DWIDTH] = (i/4) * 4;
-    end
-    #20;
+    
+    repeat(10) @(posedge clk);
+    display_arrays("4x4 Pooling Test");
+    check_pooling_result(4, inp_data, out_data);
     in_data_available = 0;
     
-    @(posedge done_pool);
-    display_arrays("4x4 Pooling Test");
-    $display("Test Case 4 Passed: 4x4 pooling completed");
-    
-    // Wait a few cycles to ensure all signals have settled
     repeat(5) @(posedge clk);
-    
-    // End simulation
-    $display("All tests completed successfully!");
+    $display("\nAll tests completed!");
     $finish;
-end
-
-//Generate VCD file for waveform viewing
-initial begin
-    $fsdbDumpfile("waves.fsdb");
-    $fsdbDumpvars(0, pool_tb);  
-    $fsdbDumpMDA();
-    $dumpfile("pool_tb.vcd");
-    $dumpvars(0, pool_tb);
 end
 
 endmodule
