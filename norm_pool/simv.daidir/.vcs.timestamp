@@ -42,14 +42,14 @@
 /tools/synopsys/vcs/U-2023.03-SP2-1/linux64/bin/vcs1
 simv
 /tools/synopsys/verdi/verdi/U-2023.03-SP2-1/share/PLI/VCS/LINUX64/verdi.tab
-pool_tb.v
-pool.v
+norm_tb.v
+norm.v
 79
 which_declare=declare -f
-XDG_SESSION_ID=75
+XDG_SESSION_ID=99
 XDG_RUNTIME_DIR=/run/user/35055
 XDG_DATA_DIRS=/user/stud/fall24/jz3858/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share:/usr/share
-VSCODE_IPC_HOOK_CLI=/run/user/35055/vscode-ipc-6788ad84-5044-4d7e-8b1e-3a540186b0ac.sock
+VSCODE_IPC_HOOK_CLI=/run/user/35055/vscode-ipc-2d655172-0bff-40de-94d6-4a85d1fe3722.sock
 VSCODE_GIT_IPC_HANDLE=/run/user/35055/vscode-git-4e30ab0b7e.sock
 VSCODE_GIT_ASKPASS_NODE=/homes/user/stud/fall24/jz3858/.vscode-server/cli/servers/Stable-e54c774e0add60467559eb0d1e229c6452cf8447/server/node
 VSCODE_GIT_ASKPASS_MAIN=/homes/user/stud/fall24/jz3858/.vscode-server/cli/servers/Stable-e54c774e0add60467559eb0d1e229c6452cf8447/server/extensions/git/dist/askpass-main.js
@@ -77,8 +77,8 @@ STROOT=/tools/synopsys/sentaurus/U-2022.12-SP2
 STDB=/user/stud/fall24/jz3858/DB
 SSL_CERT_FILE=/etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem
 SSL_CERT_DIR=/etc/pki/tls/certs
-SSH_CONNECTION=10.206.102.185 62317 128.59.64.124 22
-SSH_CLIENT=10.206.102.185 62317 22
+SSH_CONNECTION=128.59.39.139 53048 128.59.64.124 22
+SSH_CLIENT=128.59.39.139 53048 22
 SSH_ASKPASS=/usr/libexec/openssh/gnome-ssh-askpass
 SNPS_VERDI_INTERNAL_LP_XML_NEW_FLOW=1
 SNPS_VCS_PYTHON3=/tools/synopsys/vcs/U-2023.03-SP2-1/linux64/bin/Python-3.6.1/bin/python3
@@ -102,8 +102,8 @@ MGLS_LICENSE_FILE=1720@bioeelincad.ee.columbia.edu
 MGC_HOME=/tools/mentor/aok_cal_2024.3_25.13
 MFLAGS=
 MENTOR_ENV_SET=1
-MAKE_TERMOUT=/dev/pts/1
-MAKE_TERMERR=/dev/pts/1
+MAKE_TERMOUT=/dev/pts/5
+MAKE_TERMERR=/dev/pts/5
 MAKELEVEL=1
 MAKEFLAGS=
 LESSOPEN=||/usr/bin/lesspipe.sh %s
@@ -127,8 +127,8 @@ ADS_ENV_SET=1
 0
 0
 4
-1739727963 pool.v
-1739748578 pool_tb.v
+1739727981 norm.v
+1739902919 norm_tb.v
 1697019014 /tools/synopsys/verdi/verdi/U-2023.03-SP2-1/share/PLI/VCS/LINUX64/verdi.tab
 1697253802 /tools/synopsys/vcs/U-2023.03-SP2-1/linux64/lib/vcsdp_lite.tab
 4
@@ -136,5 +136,5 @@ ADS_ENV_SET=1
 1697254610 /tools/synopsys/vcs/U-2023.03-SP2-1/linux64/lib/liberrorinf.so
 1697254517 /tools/synopsys/vcs/U-2023.03-SP2-1/linux64/lib/libsnpsmalloc.so
 1697254604 /tools/synopsys/vcs/U-2023.03-SP2-1/linux64/lib/libvfs.so
-1739748586 simv.daidir
+1739902929 simv.daidir
 -1 partitionlib

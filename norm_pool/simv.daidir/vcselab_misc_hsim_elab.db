@@ -1355,7 +1355,7 @@ fHsimPreInlineInstNum64            	0
 fHsimAutoInstNum64Limit            	-7
 fHsimAutoEnableInstNum64PC         	0
 fHsCgOptFixLeaf                    	1
-fHsimDumpVars                      	0
+fHsimDumpVars                      	1
 fFgpTbReactiveLite                 	1
 fHsimCcnUnion                      	0
 fHsimOnlyElabMod                   	0
