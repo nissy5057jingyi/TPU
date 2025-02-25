@@ -103,7 +103,7 @@ cov_verdi: cov_simv novas.rc verdi_dir
 
 # You should only need to modify this section, and only the following variables:
 MODULE      = norm
-TESTBENCH   = $(MODULE)_tb.v
+TESTBENCH   = $(MODULE)_tb_q88.v
 SOURCES     = $(MODULE).v
 SYNTH_FILES = $(MODULE).vg
 
