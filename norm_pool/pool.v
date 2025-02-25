@@ -1,3 +1,38 @@
+//The width of the data. This design uses int8 precision. So, DWIDTH is 8
+//To change to a floating point 16 version, change this to 16 and also
+//change the datapath components (like adder and multiplier) to be floating point. 
+`define DWIDTH 16
+
+//This is the size of the matrix multiplier unit. In this design, we have a systolic
+//matrix multiplication unit that can multiply 32x32 matrix with a 32x32 matrix.
+`define DESIGN_SIZE 32
+`define LOG2_DESIGN_SIZE 5
+`define MAT_MUL_SIZE 32
+`define MASK_WIDTH 32
+`define LOG2_MAT_MUL_SIZE 5
+
+//This it the size of the address bus, or the depth of the RAM. Each location of 
+//the RAM is DWIDTH * MAT_MUL_SIZE wide. So, in this design, we use a total of
+//1024 * 32 bytes of memory (i.e. 32 KB).
+`define AWIDTH 10
+
+//This is the number of clock cycles spent in the mac block
+`define NUM_CYCLES_IN_MAC 3
+
+//This defines the latency of accessing data from a block ram
+`define MEM_ACCESS_LATENCY 1
+
+//Data width and address width of the APB interface for registers
+`define REG_DATAWIDTH 32
+`define REG_ADDRWIDTH 8
+
+//Width of the stride for each column in the matrices (same as ram address width)
+`define ADDR_STRIDE_WIDTH 16
+
+//Number of bits to specify the pooling window. We support 3 sizes.
+`define MAX_BITS_POOL 3
+
+
 ////////////////////////////////////////////////
 // Pooling block
 ////////////////////////////////////////////////

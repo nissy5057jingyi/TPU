@@ -2,66 +2,63 @@ Info: [VCS_SAVE_RESTORE_INFO] ASLR (Address Space Layout Randomization) is detec
 Please use '-no_save' simv switch to avoid re-execution or '-suppress=ASLR_DETECTED_INFO' to suppress this message.
 Chronologic VCS simulator copyright 1991-2023
 Contains Synopsys proprietary information.
-Compiler version U-2023.03-SP2-1_Full64; Runtime version U-2023.03-SP2-1_Full64;  Feb 25 16:17 2025
+Compiler version U-2023.03-SP2-1_Full64; Runtime version U-2023.03-SP2-1_Full64;  Feb 25 17:17 2025
+Time=0, enable_pool=0, in_data_available=0, out_data_available=x, done_pool=1
+Time=5000, enable_pool=0, in_data_available=0, out_data_available=0, done_pool=1
+Test 1: No pooling (pass-through)
+Time=30000, enable_pool=0, in_data_available=1, out_data_available=0, done_pool=1
+Time=35000, enable_pool=0, in_data_available=1, out_data_available=1, done_pool=1
+Test 1 - Pool Window Size: 0
+Out[ 0]=0010, Out[ 1]=0011, Out[ 2]=0012, Out[ 3]=0013
+Out[ 4]=0014, Out[ 5]=0015, Out[ 6]=0016, Out[ 7]=0017
+Out[ 8]=0018, Out[ 9]=0019, Out[10]=001a, Out[11]=001b
+Out[12]=001c, Out[13]=001d, Out[14]=001e, Out[15]=001f
+Out[16]=0020, Out[17]=0021, Out[18]=0022, Out[19]=0023
+Out[20]=0024, Out[21]=0025, Out[22]=0026, Out[23]=0027
+Out[24]=0028, Out[25]=0029, Out[26]=002a, Out[27]=002b
+Out[28]=002c, Out[29]=002d, Out[30]=002e, Out[31]=002f
 
-==== Q8.8 NORMALIZATION TEST ====
+Test 2: Pool window size = 1
+Time=66000, enable_pool=1, in_data_available=1, out_data_available=0, done_pool=0
+Time=75000, enable_pool=1, in_data_available=1, out_data_available=1, done_pool=0
+Test 2 - Pool Window Size: 1
+Out[ 0]=0020, Out[ 1]=0021, Out[ 2]=0022, Out[ 3]=0023
+Out[ 4]=0024, Out[ 5]=0025, Out[ 6]=0026, Out[ 7]=0027
+Out[ 8]=0028, Out[ 9]=0029, Out[10]=002a, Out[11]=002b
+Out[12]=002c, Out[13]=002d, Out[14]=002e, Out[15]=002f
+Out[16]=0030, Out[17]=0031, Out[18]=0032, Out[19]=0033
+Out[20]=0034, Out[21]=0035, Out[22]=0036, Out[23]=0037
+Out[24]=0038, Out[25]=0039, Out[26]=003a, Out[27]=003b
+Out[28]=003c, Out[29]=003d, Out[30]=003e, Out[31]=003f
 
-Test Parameters:
-  Mean = 0x0140 (1.2500 in decimal)
-  Inv_var = 0x0180 (1.5000 in decimal)
-  Q8.8 format: 8 bits integer, 8 bits fraction
+Test 3: Pool window size = 2
+Test 3 - Pool Window Size: 2
+Out[ 0]=1818, Out[ 1]=0021, Out[ 2]=0022, Out[ 3]=0023
+Out[ 4]=0024, Out[ 5]=0025, Out[ 6]=0026, Out[ 7]=0027
+Out[ 8]=0028, Out[ 9]=0029, Out[10]=002a, Out[11]=002b
+Out[12]=002c, Out[13]=002d, Out[14]=002e, Out[15]=002f
+Out[16]=0030, Out[17]=0031, Out[18]=0032, Out[19]=0033
+Out[20]=0034, Out[21]=0035, Out[22]=0036, Out[23]=0037
+Out[24]=0038, Out[25]=0039, Out[26]=003a, Out[27]=003b
+Out[28]=003c, Out[29]=003d, Out[30]=003e, Out[31]=003f
 
-Sample expected calculations:
-  Element[0]: Input=0x0380 (3.5000)
-    Step 1: (0x0380 - 0x0140) = 0x0240 (3.5000 - 1.2500 = 2.2500)
-    Step 2: Q16.16 result = 0x0240 * 0x0180 = 0x00036000
-    Step 3: Q8.8 result = 0x0360 (3.3750 in decimal)
-  Element[1]: Input=0x03c0 (3.7500)
-    Step 1: (0x03c0 - 0x0140) = 0x0280 (3.7500 - 1.2500 = 2.5000)
-    Step 2: Q16.16 result = 0x0280 * 0x0180 = 0x0003c000
-    Step 3: Q8.8 result = 0x03c0 (3.7500 in decimal)
-  Element[2]: Input=0x0400 (4.0000)
-    Step 1: (0x0400 - 0x0140) = 0x02c0 (4.0000 - 1.2500 = 2.7500)
-    Step 2: Q16.16 result = 0x02c0 * 0x0180 = 0x00042000
-    Step 3: Q8.8 result = 0x0420 (4.1250 in decimal)
-  Element[3]: Input=0x0440 (4.2500)
-    Step 1: (0x0440 - 0x0140) = 0x0300 (4.2500 - 1.2500 = 3.0000)
-    Step 2: Q16.16 result = 0x0300 * 0x0180 = 0x00048000
-    Step 3: Q8.8 result = 0x0480 (4.5000 in decimal)
-  Element[4]: Input=0x0480 (4.5000)
-    Step 1: (0x0480 - 0x0140) = 0x0340 (4.5000 - 1.2500 = 3.2500)
-    Step 2: Q16.16 result = 0x0340 * 0x0180 = 0x0004e000
-    Step 3: Q8.8 result = 0x04e0 (4.8750 in decimal)
+Test 4: Pool window size = 4
+Test 4 - Pool Window Size: 4
+Out[ 0]=1820, Out[ 1]=0021, Out[ 2]=0022, Out[ 3]=0023
+Out[ 4]=0024, Out[ 5]=0025, Out[ 6]=0026, Out[ 7]=0027
+Out[ 8]=0028, Out[ 9]=0029, Out[10]=002a, Out[11]=002b
+Out[12]=002c, Out[13]=002d, Out[14]=002e, Out[15]=002f
+Out[16]=0030, Out[17]=0031, Out[18]=0032, Out[19]=0033
+Out[20]=0034, Out[21]=0035, Out[22]=0036, Out[23]=0037
+Out[24]=0038, Out[25]=0039, Out[26]=003a, Out[27]=003b
+Out[28]=003c, Out[29]=003d, Out[30]=003e, Out[31]=003f
 
-RESULTS (first 8 elements):
-i	Input (hex)	Input (dec)	Output (hex)	Output (dec)	Expected (hex)	Expected (dec)	Correct?
----------------------------------------------------------------------------------------------------------------
-0	0x0380	3.5000	0x0360	3.3750	0x0360	3.3750	YES
-1	0x03c0	3.7500	0x03c0	3.7500	0x03c0	3.7500	YES
-2	0x0400	4.0000	0x0420	4.1250	0x0420	4.1250	YES
-3	0x0440	4.2500	0x0480	4.5000	0x0480	4.5000	YES
-4	0x0480	4.5000	0x04e0	4.8750	0x04e0	4.8750	YES
-5	0x04c0	4.7500	0x0540	5.2500	0x0540	5.2500	YES
-6	0x0500	5.0000	0x05a0	5.6250	0x05a0	5.6250	YES
-7	0x0540	5.2500	0x0600	6.0000	0x0600	6.0000	YES
-
-Normalization Module Status:
-  out_data_available = 1
-  done_norm = 0
-  cycle_count = 8
-
-Internal Module Values (first element):
-  Input data: 0x0380 (3.5000)
-  Mean applied: 0x0240 (2.2500)
-  Variance applied: 0x0360 (3.3750)
-  Output data: 0x0360 (3.3750)
-  Expected Q16.16 (intermediate): 0x00036000
-  Expected Q8.8 (final): 0x0360 (3.3750)
-
-Simulation completed
-$finish called from file "norm_tb_q88.v", line 232.
-$finish at simulation time               135000
+Time=395000, enable_pool=1, in_data_available=1, out_data_available=1, done_pool=1
+Pooling operation completed successfully
+All tests PASSED!
+$finish called from file "pool_tb.v", line 230.
+$finish at simulation time               476000
            V C S   S i m u l a t i o n   R e p o r t 
-Time: 135000 ps
+Time: 476000 ps
 CPU Time:      0.290 seconds;       Data structure size:   0.0Mb
-Tue Feb 25 16:17:03 2025
+Tue Feb 25 17:17:24 2025

@@ -42,8 +42,8 @@
 /tools/synopsys/vcs/U-2023.03-SP2-1/linux64/bin/vcs1
 simv
 /tools/synopsys/verdi/verdi/U-2023.03-SP2-1/share/PLI/VCS/LINUX64/verdi.tab
-norm_tb_q88.v
-norm.v
+pool_tb.v
+pool.v
 79
 which_declare=declare -f
 XDG_SESSION_ID=295
@@ -127,8 +127,8 @@ ADS_ENV_SET=1
 0
 0
 4
-1740518216 norm.v
-1740518132 norm_tb_q88.v
+1740519691 pool.v
+1740521836 pool_tb.v
 1697019014 /tools/synopsys/verdi/verdi/U-2023.03-SP2-1/share/PLI/VCS/LINUX64/verdi.tab
 1697253802 /tools/synopsys/vcs/U-2023.03-SP2-1/linux64/lib/vcsdp_lite.tab
 4
@@ -136,5 +136,5 @@ ADS_ENV_SET=1
 1697254610 /tools/synopsys/vcs/U-2023.03-SP2-1/linux64/lib/liberrorinf.so
 1697254517 /tools/synopsys/vcs/U-2023.03-SP2-1/linux64/lib/libsnpsmalloc.so
 1697254604 /tools/synopsys/vcs/U-2023.03-SP2-1/linux64/lib/libvfs.so
-1740518223 simv.daidir
+1740521843 simv.daidir
 -1 partitionlib

@@ -1,0 +1,7 @@
+Command exited with non-zero status 255
+{"vcs1":{"timestamp_begin":1740521201.749742454, "rt":0.29, "ut":0.07, "st":0.05}}
+{"SNPS_VCS_INTERNAL_ROOT_START_TIME": 1740521201.038684074}
+{"VCS_COMP_START_TIME": 1740521201.038684074}
+{"VCS_COMP_END_TIME": 1740521202.107497753}
+{"VCS_USER_OPTIONS": "-sverilog +vc -Mupdate -line -full64 -kdb -lca -nc -debug_access+all+reverse +warn=noTFIPC +warn=noDEBUG_DEP +warn=noENUMASSIGN +define+CLOCK_PERIOD=10.0ps pool_tb.v pool.v -o simv"}
+{"vcs1": {"peak_mem": 549924}}
