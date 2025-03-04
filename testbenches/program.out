@@ -1,0 +1,84 @@
+Info: [VCS_SAVE_RESTORE_INFO] ASLR (Address Space Layout Randomization) is detected on the machine. To enable $save functionality, ASLR will be switched off and simv re-executed.
+Please use '-no_save' simv switch to avoid re-execution or '-suppress=ASLR_DETECTED_INFO' to suppress this message.
+Chronologic VCS simulator copyright 1991-2023
+Contains Synopsys proprietary information.
+Compiler version U-2023.03-SP2-1_Full64; Runtime version U-2023.03-SP2-1_Full64;  Mar  3 18:47 2025
+Test case 1: Write to all elements through port 0
+Address: 005, First element written: 0080 (+  0.50), First element read: 0080 (+  0.50)
+
+Test case 2: Read from all elements through port 1 (same address)
+Element           0: Written data: 0080 (+  0.50), Read data: 0080 (+  0.50)
+Element           1: Written data: 0100 (+  1.00), Read data: 0100 (+  1.00)
+Element           2: Written data: 0180 (+  1.50), Read data: 0180 (+  1.50)
+Element           3: Written data: 0200 (+  2.00), Read data: 0200 (+  2.00)
+Element           4: Written data: 0280 (+  2.50), Read data: 0280 (+  2.50)
+Element           5: Written data: 0300 (+  3.00), Read data: 0300 (+  3.00)
+Element           6: Written data: 0380 (+  3.50), Read data: 0380 (+  3.50)
+Element           7: Written data: 0400 (+  4.00), Read data: 0400 (+  4.00)
+Element           8: Written data: 0480 (+  4.50), Read data: 0480 (+  4.50)
+Element           9: Written data: 0500 (+  5.00), Read data: 0500 (+  5.00)
+Element          10: Written data: 0580 (+  5.50), Read data: 0580 (+  5.50)
+Element          11: Written data: 0600 (+  6.00), Read data: 0600 (+  6.00)
+Element          12: Written data: 0680 (+  6.50), Read data: 0680 (+  6.50)
+Element          13: Written data: 0700 (+  7.00), Read data: 0700 (+  7.00)
+Element          14: Written data: 0780 (+  7.50), Read data: 0780 (+  7.50)
+Element          15: Written data: 0800 (+  8.00), Read data: 0800 (+  8.00)
+
+Test case 3: Write to a subset of elements through port 1
+Address: 00a, First element written: ff80 (-127.50), First element read: ff80 (-127.50)
+
+Test case 4: Read all elements from both ports (different addresses)
+Port 0 (Address 005):
+Element           0: 0080 (+  0.50)
+Element           1: 0100 (+  1.00)
+Element           2: 0180 (+  1.50)
+Element           3: 0200 (+  2.00)
+Element           4: 0280 (+  2.50)
+Element           5: 0300 (+  3.00)
+Element           6: 0380 (+  3.50)
+Element           7: 0400 (+  4.00)
+Element           8: 0480 (+  4.50)
+Element           9: 0500 (+  5.00)
+Element          10: 0580 (+  5.50)
+Element          11: 0600 (+  6.00)
+Element          12: 0680 (+  6.50)
+Element          13: 0700 (+  7.00)
+Element          14: 0780 (+  7.50)
+Element          15: 0800 (+  8.00)
+
+Port 1 (Address 00a):
+Element           0: ff80 (-127.50)
+Element           1: ff00 (-127.00)
+Element           2: fe80 (-126.50)
+Element           3: fe00 (-126.00)
+Element           4: fd80 (-125.50)
+Element           5: fd00 (-125.00)
+Element           6: fc80 (-124.50)
+Element           7: fc00 (-124.00)
+
+Test case 5: Simultaneous write to both ports (different addresses)
+Verify port 0 write (Address 015):
+Element           8: Written 0940 (+  9.25), Read 0940 (+  9.25)
+Element           9: Written 0a40 (+ 10.25), Read 0a40 (+ 10.25)
+Element          10: Written 0b40 (+ 11.25), Read 0b40 (+ 11.25)
+Element          11: Written 0c40 (+ 12.25), Read 0c40 (+ 12.25)
+Element          12: Written 0d40 (+ 13.25), Read 0d40 (+ 13.25)
+Element          13: Written 0e40 (+ 14.25), Read 0e40 (+ 14.25)
+Element          14: Written 0f40 (+ 15.25), Read 0f40 (+ 15.25)
+Element          15: Written 1040 (+ 16.25), Read 1040 (+ 16.25)
+
+Verify port 1 write (Address 020):
+Element           0: Written 04c0 (+  4.75), Read 04c0 (+  4.75)
+Element           1: Written 05c0 (+  5.75), Read 05c0 (+  5.75)
+Element           2: Written 06c0 (+  6.75), Read 06c0 (+  6.75)
+Element           3: Written 07c0 (+  7.75), Read 07c0 (+  7.75)
+Element           4: Written 08c0 (+  8.75), Read 08c0 (+  8.75)
+Element           5: Written 09c0 (+  9.75), Read 09c0 (+  9.75)
+Element           6: Written 0ac0 (+ 10.75), Read 0ac0 (+ 10.75)
+Element           7: Written 0bc0 (+ 11.75), Read 0bc0 (+ 11.75)
+$finish called from file "ram_tb.v", line 175.
+$finish at simulation time               280000
+           V C S   S i m u l a t i o n   R e p o r t 
+Time: 280000 ps
+CPU Time:      0.290 seconds;       Data structure size:   0.1Mb
+Mon Mar  3 18:47:40 2025
