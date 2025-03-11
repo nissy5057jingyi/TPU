@@ -1,0 +1,85 @@
+Info: [VCS_SAVE_RESTORE_INFO] ASLR (Address Space Layout Randomization) is detected on the machine. To enable $save functionality, ASLR will be switched off and simv re-executed.
+Please use '-no_save' simv switch to avoid re-execution or '-suppress=ASLR_DETECTED_INFO' to suppress this message.
+Chronologic VCS simulator copyright 1991-2023
+Contains Synopsys proprietary information.
+Compiler version U-2023.03-SP2-1_Full64; Runtime version U-2023.03-SP2-1_Full64;  Mar 11 12:20 2025
+
+==== Q5.3 NORMALIZATION TEST WITH STANDARD ROUNDING ====
+
+Input[0]: -2.250 decimal => 0xee Q5.3 format
+Input[1]: -2.125 decimal => 0xef Q5.3 format
+Input[2]: -2.000 decimal => 0xf0 Q5.3 format
+Input[3]: -1.875 decimal => 0xf1 Q5.3 format
+Input[4]: -1.750 decimal => 0xf2 Q5.3 format
+Input[5]: -1.625 decimal => 0xf3 Q5.3 format
+Input[6]: -1.500 decimal => 0xf4 Q5.3 format
+Input[7]: -1.375 decimal => 0xf5 Q5.3 format
+Test Parameters:
+  Mean = 0x04 (0.5000 in decimal)
+  Inv_var = 0x0c (1.5000 in decimal)
+  Q5.3 format: 1 sign bit, 4 bits integer, 3 bits fraction
+  Rounding: Standard rounding (away from zero if fraction >= 0.5)
+
+Sample expected calculations with standard rounding:
+  Element[0]: Input=0xee (-2.2500)
+    Step 1: (0xee - 0x04) = 0xea (-2.2500 - 0.5000 = -2.7500)
+    Step 2: Q10.6 result = 0xea * 0x0c = 0xfef8
+    Step 3: Q5.3 result with standard rounding = 0xdf (-4.1250 in decimal)
+  Element[8]: Input=0xf6 (-1.2500)
+    Step 1: (0xf6 - 0x04) = 0xf2 (-1.2500 - 0.5000 = -1.7500)
+    Step 2: Q10.6 result = 0xf2 * 0x0c = 0xff58
+    Step 3: Q5.3 result with standard rounding = 0xeb (-2.6250 in decimal)
+  Element[16]: Input=0xfe (-0.2500)
+    Step 1: (0xfe - 0x04) = 0xfa (-0.2500 - 0.5000 = -0.7500)
+    Step 2: Q10.6 result = 0xfa * 0x0c = 0xffb8
+    Step 3: Q5.3 result with standard rounding = 0xf7 (-1.1250 in decimal)
+  Element[24]: Input=0x06 (0.7500)
+    Step 1: (0x06 - 0x04) = 0x02 (0.7500 - 0.5000 = 0.2500)
+    Step 2: Q10.6 result = 0x02 * 0x0c = 0x0018
+    Step 3: Q5.3 result with standard rounding = 0x03 (0.3750 in decimal)
+  Element[30]: Input=0x0c (1.5000)
+    Step 1: (0x0c - 0x04) = 0x08 (1.5000 - 0.5000 = 1.0000)
+    Step 2: Q10.6 result = 0x08 * 0x0c = 0x0060
+    Step 3: Q5.3 result with standard rounding = 0x0c (1.5000 in decimal)
+
+RESULTS (first 8 elements):
+i	Input (hex)	Input (dec)	Output (hex)	Output (dec)	Expected (hex)	Expected (dec)	Correct?
+---------------------------------------------------------------------------------------------------------------
+0	0xee	-2.2500	0xdf	-4.1250	0xdf	-4.1250	YES
+1	0xef	-2.1250	0xdf	-4.1250	0xdf	-4.1250	YES
+2	0xf0	-2.0000	0xe2	-3.7500	0xe2	-3.7500	YES
+3	0xf1	-1.8750	0xe2	-3.7500	0xe2	-3.7500	YES
+4	0xf2	-1.7500	0xe5	-3.3750	0xe5	-3.3750	YES
+5	0xf3	-1.6250	0xe5	-3.3750	0xe5	-3.3750	YES
+6	0xf4	-1.5000	0xe8	-3.0000	0xe8	-3.0000	YES
+7	0xf5	-1.3750	0xe8	-3.0000	0xe8	-3.0000	YES
+
+Normalization Module Status:
+  out_data_available = 1
+  done_norm = 0
+  cycle_count = 8
+
+Internal Module Values (examining two elements):
+NEGATIVE EXAMPLE (index 0, value -2.25):
+  Input data: 0xee (-2.2500)
+  Mean applied: 0xea (-2.7500)
+  Variance applied: 0xdf (-4.1250)
+  Output data: 0xdf (-4.1250)
+  Expected Q10.6 (intermediate): 0xfef8
+  Expected Q5.3 with standard rounding: 0xdf (-4.1250)
+
+POSITIVE EXAMPLE (index 30, value 1.5):
+  Input data: 0x0c (1.5000)
+  Mean applied: 0x08 (1.0000)
+  Variance applied: 0x0c (1.5000)
+  Output data: 0x0c (1.5000)
+  Expected Q10.6 (intermediate): 0x0060
+  Expected Q5.3 with standard rounding: 0x0c (1.5000)
+
+Simulation completed with standard rounding for negative numbers
+$finish called from file "norm_tb.v", line 315.
+$finish at simulation time               135000
+           V C S   S i m u l a t i o n   R e p o r t 
+Time: 135000 ps
+CPU Time:      0.150 seconds;       Data structure size:   0.0Mb
+Tue Mar 11 12:20:27 2025
