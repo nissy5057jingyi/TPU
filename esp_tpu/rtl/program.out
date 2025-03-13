@@ -1,0 +1,138 @@
+Info: [VCS_SAVE_RESTORE_INFO] ASLR (Address Space Layout Randomization) is detected on the machine. To enable $save functionality, ASLR will be switched off and simv re-executed.
+Please use '-no_save' simv switch to avoid re-execution or '-suppress=ASLR_DETECTED_INFO' to suppress this message.
+Chronologic VCS simulator copyright 1991-2023
+Contains Synopsys proprietary information.
+Compiler version U-2023.03-SP2-1_Full64; Runtime version U-2023.03-SP2-1_Full64;  Mar 12 21:11 2025
+=== TPU Q5.3 Fixed-Point Support Testbench ===
+
+--- Test 1: Matrix Multiplication with Q5.3 Values ---
+Writing Input Vector in Q5.3 format:
+A[0] = 1.000000 (Q5.3: 0x08)
+A[1] = 1.000000 (Q5.3: 0x08)
+A[2] = 1.000000 (Q5.3: 0x08)
+A[3] = 1.000000 (Q5.3: 0x08)
+A[4] = 1.000000 (Q5.3: 0x08)
+A[5] = 1.000000 (Q5.3: 0x08)
+A[6] = 1.000000 (Q5.3: 0x08)
+A[7] = 1.000000 (Q5.3: 0x08)
+A[8] = 1.000000 (Q5.3: 0x08)
+A[9] = 1.000000 (Q5.3: 0x08)
+A[10] = 1.000000 (Q5.3: 0x08)
+A[11] = 1.000000 (Q5.3: 0x08)
+A[12] = 1.000000 (Q5.3: 0x08)
+A[13] = 1.000000 (Q5.3: 0x08)
+A[14] = 1.000000 (Q5.3: 0x08)
+A[15] = 1.000000 (Q5.3: 0x08)
+
+Writing Weight Vector in Q5.3 format:
+B[0] = 0.500000 (Q5.3: 0x04)
+B[1] = 1.000000 (Q5.3: 0x08)
+B[2] = 1.500000 (Q5.3: 0x0c)
+B[3] = 2.000000 (Q5.3: 0x10)
+B[4] = 2.500000 (Q5.3: 0x14)
+B[5] = 3.000000 (Q5.3: 0x18)
+B[6] = 3.500000 (Q5.3: 0x1c)
+B[7] = 4.000000 (Q5.3: 0x20)
+B[8] = 4.500000 (Q5.3: 0x24)
+B[9] = 5.000000 (Q5.3: 0x28)
+B[10] = 5.500000 (Q5.3: 0x2c)
+B[11] = 6.000000 (Q5.3: 0x30)
+B[12] = 6.500000 (Q5.3: 0x34)
+B[13] = 7.000000 (Q5.3: 0x38)
+B[14] = 7.500000 (Q5.3: 0x3c)
+B[15] = 8.000000 (Q5.3: 0x40)
+
+Starting Matrix Multiplication...
+Matrix Multiplication Complete!
+
+Reading Result Vector in Q5.3 format:
+C[0] = 0.000000 (Q5.3: 0xxx)
+C[1] = 0.000000 (Q5.3: 0xxx)
+C[2] = 0.000000 (Q5.3: 0xxx)
+C[3] = 0.000000 (Q5.3: 0xxx)
+C[4] = 0.000000 (Q5.3: 0xxx)
+C[5] = 0.000000 (Q5.3: 0xxx)
+C[6] = 0.000000 (Q5.3: 0xxx)
+C[7] = 0.000000 (Q5.3: 0xxx)
+C[8] = 0.000000 (Q5.3: 0xxx)
+C[9] = 0.000000 (Q5.3: 0xxx)
+C[10] = 0.000000 (Q5.3: 0xxx)
+C[11] = 0.000000 (Q5.3: 0xxx)
+C[12] = 0.000000 (Q5.3: 0xxx)
+C[13] = 0.000000 (Q5.3: 0xxx)
+C[14] = 0.000000 (Q5.3: 0xxx)
+C[15] = 0.000000 (Q5.3: 0xxx)
+
+Expected result should be around 68.0 (or may saturate to 15.875 in Q5.3)
+
+--- Test 2: Matrix Multiplication with ReLU Activation ---
+
+Writing Input Vector with mixed values in Q5.3 format:
+A[0] = 1.000000 (Q5.3: 0x08)
+A[1] = -1.000000 (Q5.3: 0xf8)
+A[2] = 1.000000 (Q5.3: 0x08)
+A[3] = -1.000000 (Q5.3: 0xf8)
+A[4] = 1.000000 (Q5.3: 0x08)
+A[5] = -1.000000 (Q5.3: 0xf8)
+A[6] = 1.000000 (Q5.3: 0x08)
+A[7] = -1.000000 (Q5.3: 0xf8)
+A[8] = 1.000000 (Q5.3: 0x08)
+A[9] = -1.000000 (Q5.3: 0xf8)
+A[10] = 1.000000 (Q5.3: 0x08)
+A[11] = -1.000000 (Q5.3: 0xf8)
+A[12] = 1.000000 (Q5.3: 0x08)
+A[13] = -1.000000 (Q5.3: 0xf8)
+A[14] = 1.000000 (Q5.3: 0x08)
+A[15] = -1.000000 (Q5.3: 0xf8)
+
+Starting Matrix Multiplication with ReLU...
+Computation Complete!
+
+Reading Result Vector with ReLU applied in Q5.3 format:
+C[0] = 0.000000 (Q5.3: 0xxx)
+C[1] = 0.000000 (Q5.3: 0xxx)
+C[2] = 0.000000 (Q5.3: 0xxx)
+C[3] = 0.000000 (Q5.3: 0xxx)
+C[4] = 0.000000 (Q5.3: 0xxx)
+C[5] = 0.000000 (Q5.3: 0xxx)
+C[6] = 0.000000 (Q5.3: 0xxx)
+C[7] = 0.000000 (Q5.3: 0xxx)
+C[8] = 0.000000 (Q5.3: 0xxx)
+C[9] = 0.000000 (Q5.3: 0xxx)
+C[10] = 0.000000 (Q5.3: 0xxx)
+C[11] = 0.000000 (Q5.3: 0xxx)
+C[12] = 0.000000 (Q5.3: 0xxx)
+C[13] = 0.000000 (Q5.3: 0xxx)
+C[14] = 0.000000 (Q5.3: 0xxx)
+C[15] = 0.000000 (Q5.3: 0xxx)
+
+--- Test 3: Matrix Multiplication with Tanh Activation ---
+
+Starting Matrix Multiplication with Tanh...
+Computation Complete!
+
+Reading Result Vector with Tanh applied in Q5.3 format:
+C[0] = 0.000000 (Q5.3: 0xxx)
+C[1] = 0.000000 (Q5.3: 0xxx)
+C[2] = 0.000000 (Q5.3: 0xxx)
+C[3] = 0.000000 (Q5.3: 0xxx)
+C[4] = 0.000000 (Q5.3: 0xxx)
+C[5] = 0.000000 (Q5.3: 0xxx)
+C[6] = 0.000000 (Q5.3: 0xxx)
+C[7] = 0.000000 (Q5.3: 0xxx)
+C[8] = 0.000000 (Q5.3: 0xxx)
+C[9] = 0.000000 (Q5.3: 0xxx)
+C[10] = 0.000000 (Q5.3: 0xxx)
+C[11] = 0.000000 (Q5.3: 0xxx)
+C[12] = 0.000000 (Q5.3: 0xxx)
+C[13] = 0.000000 (Q5.3: 0xxx)
+C[14] = 0.000000 (Q5.3: 0xxx)
+C[15] = 0.000000 (Q5.3: 0xxx)
+
+=== Q5.3 Fixed-Point Support Tests Completed ===
+$finish called from file "tpu_small_os_q5_3_tb.v", line 437.
+$finish at simulation time              8550000
+           V C S   S i m u l a t i o n   R e p o r t 
+Time: 8550000 ps
+CPU Time:      0.170 seconds;       Data structure size:   0.7Mb
+Wed Mar 12 21:11:51 2025

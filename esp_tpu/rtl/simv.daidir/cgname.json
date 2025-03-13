@@ -1,0 +1,68 @@
+{
+    "std": [
+        "std",
+        "reYIK",
+        "module",
+        1
+    ],
+    "tpu_q53_tb": [
+        "tpu_q53_tb",
+        "iyUpZ",
+        "module",
+        2
+    ],
+    "output_logic": [
+        "output_logic",
+        "Gi89K",
+        "module",
+        3
+    ],
+    "systolic_pe_matrix": [
+        "systolic_pe_matrix",
+        "r9mhh",
+        "module",
+        4
+    ],
+    "seq_mac_q53": [
+        "seq_mac_q53",
+        "eCsxF",
+        "module",
+        5
+    ],
+    "cfg": [
+        "cfg",
+        "IDgfE",
+        "module",
+        6
+    ],
+    "norm": [
+        "norm",
+        "FFLbr",
+        "module",
+        7
+    ],
+    "ram_0000": [
+        "ram_0000",
+        "dD6nr",
+        "module",
+        8
+    ],
+    "control": [
+        "control",
+        "ai8Aa",
+        "module",
+        9
+    ],
+    "pool": [
+        "pool",
+        "UeNQN",
+        "module",
+        10
+    ],
+    "...MASTER...": [
+        "SIM",
+        "amcQw",
+        "module",
+        11
+    ]
+}

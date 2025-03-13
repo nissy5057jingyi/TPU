@@ -1,0 +1,25 @@
+rc file Version 1.0
+
+[Design]
+COMPILE_PATH=/homes/user/stud/fall24/jz3858/CSEE4824/TPU/esp_tpu/rtl
+VCS_HOME=/tools/synopsys/vcs/U-2023.03-SP2-1
+VERDI_HOME=/tools/synopsys/verdi/verdi/U-2023.03-SP2-1
+SystemC=FALSE
+UUM=FALSE
+KDB=TRUE
+USE_NOVAS_HOME=FALSE
+COSIM=FALSE
+TOP=tpu_q53_tb 
+OPTION=-ssv -ssy 
+ELAB_OPTION=-ssv -ssy 
+ELAB=TRUE
+SIMV_WRAPPER=FALSE
+[vcs]
+RUN_ELABCOM=unset TURBO_LOG_DIR ;\rm -rf /homes/user/stud/fall24/jz3858/CSEE4824/TPU/esp_tpu/rtl/simv.daidir/elabcomLog ;/tools/synopsys/vcs/U-2023.03-SP2-1/linux64/bin/elabcom -logdir /homes/user/stud/fall24/jz3858/CSEE4824/TPU/esp_tpu/rtl/simv.daidir/elabcomLog  -simvdaidir /homes/user/stud/fall24/jz3858/CSEE4824/TPU/esp_tpu/rtl/simv.daidir  -lib /homes/user/stud/fall24/jz3858/CSEE4824/TPU/esp_tpu/rtl/simv.daidir/work  -saveLevel  -elab /homes/user/stud/fall24/jz3858/CSEE4824/TPU/esp_tpu/rtl/simv.daidir/kdb -simflow -simdir /homes/user/stud/fall24/jz3858/CSEE4824/TPU/esp_tpu/rtl/simv.daidir/kdb_libs -topfile /homes/user/stud/fall24/jz3858/CSEE4824/TPU/esp_tpu/rtl/simv.daidir/.elabcomTopFile -ssv -ssy  -Lf work +disable_message+C00380+C00381 +disable_message+C00388+C00389  >& /dev/null  && echo Success >& /homes/user/stud/fall24/jz3858/CSEE4824/TPU/esp_tpu/rtl/simv.daidir/.elabcomReport || echo Fail >& /homes/user/stud/fall24/jz3858/CSEE4824/TPU/esp_tpu/rtl/simv.daidir/.elabcomReport; \rm -rf /homes/user/stud/fall24/jz3858/CSEE4824/TPU/esp_tpu/rtl/simv.daidir/work.lib++ /homes/user/stud/fall24/jz3858/CSEE4824/TPU/esp_tpu/rtl/simv.daidir/kdb_libs/ 
+
+[Value]
+WREALX=ffff534e50535f58
+WREALZ=ffff534e50535f5a
+
+[CompInfo]
+FLOW_OPTS=-kdb -ssv -ssy 
