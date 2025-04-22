@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sld>
+  <accelerator name="memory_copier" desc="Accelerator MEMORY_COPIER" data_size="4" device_id="075" hls_tool="rtl">
+    <param name="data_out" desc="data_out" />
+    <param name="enable" desc="enable" />
+    <param name="data_in" desc="data_in" />
+  </accelerator>
+</sld>
