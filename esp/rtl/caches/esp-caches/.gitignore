@@ -1,0 +1,11 @@
+*.swp
+*.swo
+*.log
+*.so
+INCA_libs
+.simvision
+*.key
+*.shm
+*.err
+*.diag
+xcelium.d
