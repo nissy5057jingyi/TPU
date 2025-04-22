@@ -1,0 +1,264 @@
+m255
+K4
+z2
+!s11f vlog 2024.2 2024.05, May 20 2024
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 d/user/stud/fall24/xl3455/ESP/project/qsim_rtl/matul_16_16_matrix
+vmatmul_16_16_systolic
+2../../rtl/matmul_16_16_systolic/matmul_16_16_systolic.v
+Z1 !s110 1741728266
+!i10b 1
+!s100 :o^ACb:PHPnMk9YHWZDXU3
+IheCnlH3[oem=`GfLU>6=21
+R0
+w1741379716
+8../../rtl/matmul_16_16_systolic/matmul_16_16_systolic.v
+F../../rtl/matmul_16_16_systolic/matmul_16_16_systolic.v
+!i122 0
+L0 220 1426
+Z2 VDg1SIo80bB@j0V0VzS_@n1
+Z3 OP;L;2024.2;79
+r1
+!s85 0
+31
+Z4 !s108 1741728266.000000
+!s107 ../../rtl/matmul_16_16_systolic/matmul_16_16_systolic.v|
+!s90 -reportprogress|300|+acc|-incr|../../rtl/matmul_16_16_systolic/matmul_16_16_systolic.v|
+!i113 1
+Z5 o+acc
+Z6 tCvgOpt 0
+voutput_logic
+2../../rtl/output_logic/output_logic.v
+R1
+!i10b 1
+!s100 1a[:1CAOgQeU@J@lVi5KU1
+IUNDkYQ=SX:Qh>TnDi`:A41
+R0
+w1741325503
+8../../rtl/output_logic/output_logic.v
+F../../rtl/output_logic/output_logic.v
+!i122 1
+L0 220 695
+R2
+R3
+r1
+!s85 0
+31
+R4
+!s107 ../../rtl/output_logic/output_logic.v|
+!s90 -reportprogress|300|+acc|-incr|../../rtl/output_logic/output_logic.v|
+!i113 1
+R5
+R6
+vprocessing_element
+2../../rtl/processing_element/processing_element.v
+R1
+!i10b 1
+!s100 DZEKajN4oDhf^50?Qn?0z0
+IL?BY98jFY=C[[`9iDNkNc0
+R0
+w1741728226
+8../../rtl/processing_element/processing_element.v
+F../../rtl/processing_element/processing_element.v
+!i122 6
+L0 3 97
+R2
+R3
+r1
+!s85 0
+31
+R4
+!s107 ../../rtl/processing_element/processing_element.v|
+!s90 -reportprogress|300|+acc|-incr|../../rtl/processing_element/processing_element.v|
+!i113 1
+R5
+R6
+vprocessing_element_bottom_edge
+2../../rtl/processing_element_bottom_edge/processing_element_bottom_edge.v
+R1
+!i10b 1
+!s100 Azo>:YJ5L[T_JKa1[16F@3
+Ie9LZWb@@eWL17GHCB4H^91
+R0
+w1741728208
+8../../rtl/processing_element_bottom_edge/processing_element_bottom_edge.v
+F../../rtl/processing_element_bottom_edge/processing_element_bottom_edge.v
+!i122 4
+L0 3 96
+R2
+R3
+r1
+!s85 0
+31
+R4
+!s107 ../../rtl/processing_element_bottom_edge/processing_element_bottom_edge.v|
+!s90 -reportprogress|300|+acc|-incr|../../rtl/processing_element_bottom_edge/processing_element_bottom_edge.v|
+!i113 1
+R5
+R6
+vprocessing_element_top_edge
+2../../rtl/processing_element_top_edge/processing_element_top_edge.v
+R1
+!i10b 1
+!s100 VC[F43Y1Q>goUVVS]LZ6?2
+I4ObBCG^C>9HIn@jF7h46z2
+R0
+w1741728189
+8../../rtl/processing_element_top_edge/processing_element_top_edge.v
+F../../rtl/processing_element_top_edge/processing_element_top_edge.v
+!i122 5
+L0 2 95
+R2
+R3
+r1
+!s85 0
+31
+R4
+!s107 ../../rtl/processing_element_top_edge/processing_element_top_edge.v|
+!s90 -reportprogress|300|+acc|-incr|../../rtl/processing_element_top_edge/processing_element_top_edge.v|
+!i113 1
+R5
+R6
+vqadd
+2../../rtl/qadd/qadd.v
+Z7 !s110 1741728267
+!i10b 1
+!s100 []9cDG]W=e_Hg[=`A@N4]2
+I3X9oLakEK3e`QWMcCa_BY0
+R0
+w1741714738
+8../../rtl/qadd/qadd.v
+F../../rtl/qadd/qadd.v
+!i122 9
+L0 1 10
+R2
+R3
+r1
+!s85 0
+31
+Z8 !s108 1741728267.000000
+!s107 ../../rtl/qadd/qadd.v|
+!s90 -reportprogress|300|+acc|-incr|../../rtl/qadd/qadd.v|
+!i113 1
+R5
+R6
+vqmult
+2../../rtl/qmult/qmult.v
+R7
+!i10b 1
+!s100 c`YD]T_Vc2bjmE<I1:7bc1
+I9HPd^neNi1>BP4^2L;V=91
+R0
+w1740932482
+8../../rtl/qmult/qmult.v
+F../../rtl/qmult/qmult.v
+!i122 8
+L0 2 10
+R2
+R3
+r1
+!s85 0
+31
+R8
+!s107 ../../rtl/qmult/qmult.v|
+!s90 -reportprogress|300|+acc|-incr|../../rtl/qmult/qmult.v|
+!i113 1
+R5
+R6
+vseq_mac
+2../../rtl/seq_mac/seq_mac.v
+R7
+!i10b 1
+!s100 SfmbEmkO4Qa4^bfOO?P_W3
+IlEc1Qgh6a5YPWVEkdcKQ31
+R0
+w1741280995
+8../../rtl/seq_mac/seq_mac.v
+F../../rtl/seq_mac/seq_mac.v
+!i122 7
+L0 3 67
+R2
+R3
+r1
+!s85 0
+31
+R4
+!s107 ../../rtl/seq_mac/seq_mac.v|
+!s90 -reportprogress|300|+acc|-incr|../../rtl/seq_mac/seq_mac.v|
+!i113 1
+R5
+R6
+vsystolic_data_setup
+2../../rtl/systolic_data_setup/systolic_data_setup.v
+R1
+!i10b 1
+!s100 SZQ9Cbm;1SkB2388:6e142
+I?ADj2VLLCanbG3PdaLbG83
+R0
+w1741322230
+8../../rtl/systolic_data_setup/systolic_data_setup.v
+F../../rtl/systolic_data_setup/systolic_data_setup.v
+!i122 2
+L0 218 1058
+R2
+R3
+r1
+!s85 0
+31
+R4
+!s107 ../../rtl/systolic_data_setup/systolic_data_setup.v|
+!s90 -reportprogress|300|+acc|-incr|../../rtl/systolic_data_setup/systolic_data_setup.v|
+!i113 1
+R5
+R6
+vsystolic_pe_matrix
+2../../rtl/systolic_pe_matrix/systolic_pe_matrix.v
+R1
+!i10b 1
+!s100 VoT`mNRkW2gUKEl;X20AE3
+IOT=?YN?`OK=MQl9mTEk5D1
+R0
+w1741727202
+8../../rtl/systolic_pe_matrix/systolic_pe_matrix.v
+F../../rtl/systolic_pe_matrix/systolic_pe_matrix.v
+!i122 3
+L0 221 895
+R2
+R3
+r1
+!s85 0
+31
+R4
+!s107 ../../rtl/systolic_pe_matrix/systolic_pe_matrix.v|
+!s90 -reportprogress|300|+acc|-incr|../../rtl/systolic_pe_matrix/systolic_pe_matrix.v|
+!i113 1
+R5
+R6
+vtb_matmul_16_16
+2test_matmul_16_16_matrix.v
+R7
+!i10b 1
+!s100 bM]PCHcH3LmE6jF`Y5Mf32
+I4;]B4P2P1MhaTEoLK;jSL2
+R0
+w1741381814
+8test_matmul_16_16_matrix.v
+Ftest_matmul_16_16_matrix.v
+!i122 10
+L0 3 139
+R2
+R3
+r1
+!s85 0
+31
+R8
+!s107 test_matmul_16_16_matrix.v|
+!s90 -reportprogress|300|+acc|-incr|test_matmul_16_16_matrix.v|
+!i113 1
+R5
+R6

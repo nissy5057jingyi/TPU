@@ -1,0 +1,88 @@
+# do runsim.do
+# ** Warning: (vlib-34) Library already exists at "work".
+# Errors: 0, Warnings: 1
+# Model Technology ModelSim DE vmap 2024.2 Lib Mapping Utility 2024.05 May 20 2024
+# vmap work work 
+# Modifying modelsim.ini
+# Model Technology ModelSim DE vlog 2024.2 Compiler 2024.05 May 20 2024
+# Start time: 13:45:56 on Mar 11,2025
+# vlog -reportprogress 300 "+acc" -incr ../../rtl/qmult/qmult.v 
+# -- Skipping module qmult
+# 
+# Top level modules:
+# 	qmult
+# End time: 13:45:56 on Mar 11,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim DE vlog 2024.2 Compiler 2024.05 May 20 2024
+# Start time: 13:45:56 on Mar 11,2025
+# vlog -reportprogress 300 "+acc" -incr test_qmult.v 
+# -- Skipping module tb_qmult
+# 
+# Top level modules:
+# 	tb_qmult
+# End time: 13:45:57 on Mar 11,2025, Elapsed time: 0:00:01
+# Errors: 0, Warnings: 0
+# ** Warning: (vsim-8690) Ignoring plusarg '+acc' with -novopt in effect.
+# vsim "+acc" -t ps -lib work tb_qmult 
+# Start time: 13:45:57 on Mar 11,2025
+# //  ModelSim DE 2024.2 May 20 2024 Linux 4.18.0-553.40.1.el8_10.x86_64
+# //
+# // Unpublished work. Copyright 2024 Siemens
+# //
+# // This material contains trade secrets or otherwise confidential information
+# // owned by Siemens Industry Software Inc. or its affiliates (collectively,
+# // "SISW"), or its licensors. Access to and use of this information is strictly
+# // limited as set forth in the Customer's applicable agreements with SISW.
+# //
+# // This material may not be copied, distributed, or otherwise disclosed outside
+# // of the Customer's facilities without the express written permission of SISW,
+# // and may not be used in any way not expressly authorized by SISW.
+# //
+# Loading work.tb_qmult
+# Loading work.qmult
+# ** UI-Msg (Warning): (vish-4014) No objects found matching 'radix'.
+# Executing ONERROR command at macro ./waveformat.do line 4
+# ** UI-Msg (Warning): (vish-4014) No objects found matching 'radix'.
+# Executing ONERROR command at macro ./waveformat.do line 5
+# ** UI-Msg (Warning): (vish-4014) No objects found matching 'radix'.
+# Executing ONERROR command at macro ./waveformat.do line 6
+# ** UI-Msg (Warning): (vish-4014) No objects found matching 'radix'.
+# Executing ONERROR command at macro ./waveformat.do line 7
+# Starting Multiplication Testbench...
+# PASS:   36 * -127 =  -4572
+# PASS: -119 *  -29 =   3451
+# PASS:   13 *   13 =    169
+# PASS:  -27 * -110 =   2970
+# PASS:    1 *   13 =     13
+# PASS:  118 *   61 =   7198
+# PASS:  109 *   12 =   1308
+# PASS:  121 *  -58 =  -7018
+# PASS:  -59 *  -86 =   5074
+# PASS:  101 *   -9 =   -909
+# PASS: -110 *   15 =  -1650
+# PASS:  114 *  -50 =  -5700
+# PASS:  -24 *  -59 =   1416
+# PASS:   92 *  -67 =  -6164
+# PASS:  -83 *  -27 =   2241
+# PASS:  -29 *   10 =   -290
+# PASS:    0 *   32 =      0
+# PASS:   42 *  -99 =  -4158
+# PASS: -106 * -109 =  11554
+# PASS: -115 *  -45 =   5175
+# PASS:    0 *  127 =      0
+# PASS:  127 *  127 =  16129
+# PASS: -128 * -128 =  16384
+# PASS: -128 *  127 = -16256
+# PASS:   -1 *    1 =     -1
+# PASS:    1 *   -1 =     -1
+# PASS:   64 *   -2 =   -128
+# PASS:  -64 *    2 =   -128
+# PASS:   -1 *   -1 =      1
+# PASS:    2 *    3 =      6
+# All tests passed!
+# ** Note: $finish    : test_qmult.v(84)
+#    Time: 300 ns  Iteration: 0  Instance: /tb_qmult
+# 1
+# Break in Module tb_qmult at test_qmult.v line 84
+# End time: 13:46:36 on Mar 11,2025, Elapsed time: 0:00:39
+# Errors: 0, Warnings: 1

@@ -1,0 +1,218 @@
+# //  ModelSim DE 2024.2 May 20 2024 Linux 4.18.0-553.50.1.el8_10.x86_64
+# //
+# // Unpublished work. Copyright 2024 Siemens
+# //
+# // This material contains trade secrets or otherwise confidential information
+# // owned by Siemens Industry Software Inc. or its affiliates (collectively,
+# // "SISW"), or its licensors. Access to and use of this information is strictly
+# // limited as set forth in the Customer's applicable agreements with SISW.
+# //
+# // This material may not be copied, distributed, or otherwise disclosed outside
+# // of the Customer's facilities without the express written permission of SISW,
+# // and may not be used in any way not expressly authorized by SISW.
+# //
+# do runsim.do
+# Model Technology ModelSim DE vmap 2024.2 Lib Mapping Utility 2024.05 May 20 2024
+# vmap work work 
+# Copying /tools/mentor/ModelSim/2024.2/modelsim_dlx/linuxpe/../modelsim.ini to modelsim.ini
+# Modifying modelsim.ini
+# Model Technology ModelSim DE vlog 2024.2 Compiler 2024.05 May 20 2024
+# Start time: 17:29:37 on Apr 21,2025
+# vlog -reportprogress 300 "+acc" -incr ../../rtl/top/top.v 
+# -- Compiling module top
+# 
+# Top level modules:
+# 	top
+# End time: 17:29:38 on Apr 21,2025, Elapsed time: 0:00:01
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim DE vlog 2024.2 Compiler 2024.05 May 20 2024
+# Start time: 17:29:38 on Apr 21,2025
+# vlog -reportprogress 300 "+acc" -incr ../../rtl/ram/ram.v 
+# -- Compiling module ram
+# 
+# Top level modules:
+# 	ram
+# End time: 17:29:38 on Apr 21,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim DE vlog 2024.2 Compiler 2024.05 May 20 2024
+# Start time: 17:29:38 on Apr 21,2025
+# vlog -reportprogress 300 "+acc" -incr ../../rtl/dpram_original/dpram_original.v 
+# -- Compiling module dpram_original
+# 
+# Top level modules:
+# 	dpram_original
+# End time: 17:29:38 on Apr 21,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim DE vlog 2024.2 Compiler 2024.05 May 20 2024
+# Start time: 17:29:38 on Apr 21,2025
+# vlog -reportprogress 300 "+acc" -incr ../../rtl/control/control.v 
+# -- Compiling module control
+# 
+# Top level modules:
+# 	control
+# End time: 17:29:38 on Apr 21,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim DE vlog 2024.2 Compiler 2024.05 May 20 2024
+# Start time: 17:29:38 on Apr 21,2025
+# vlog -reportprogress 300 "+acc" -incr ../../rtl/cfg/cfg.v 
+# -- Compiling module cfg
+# 
+# Top level modules:
+# 	cfg
+# End time: 17:29:38 on Apr 21,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim DE vlog 2024.2 Compiler 2024.05 May 20 2024
+# Start time: 17:29:38 on Apr 21,2025
+# vlog -reportprogress 300 "+acc" -incr ../../rtl/matmul_16_16_systolic/matmul_16_16_systolic.v 
+# -- Compiling module matmul_16_16_systolic
+# 
+# Top level modules:
+# 	matmul_16_16_systolic
+# End time: 17:29:39 on Apr 21,2025, Elapsed time: 0:00:01
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim DE vlog 2024.2 Compiler 2024.05 May 20 2024
+# Start time: 17:29:39 on Apr 21,2025
+# vlog -reportprogress 300 "+acc" -incr ../../rtl/systolic_data_setup/systolic_data_setup.v 
+# -- Compiling module systolic_data_setup
+# 
+# Top level modules:
+# 	systolic_data_setup
+# End time: 17:29:39 on Apr 21,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim DE vlog 2024.2 Compiler 2024.05 May 20 2024
+# Start time: 17:29:39 on Apr 21,2025
+# vlog -reportprogress 300 "+acc" -incr ../../rtl/output_logic/output_logic.v 
+# -- Compiling module output_logic
+# 
+# Top level modules:
+# 	output_logic
+# End time: 17:29:39 on Apr 21,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim DE vlog 2024.2 Compiler 2024.05 May 20 2024
+# Start time: 17:29:39 on Apr 21,2025
+# vlog -reportprogress 300 "+acc" -incr ../../rtl/systolic_pe_matrix/systolic_pe_matrix.v 
+# -- Compiling module systolic_pe_matrix
+# 
+# Top level modules:
+# 	systolic_pe_matrix
+# End time: 17:29:39 on Apr 21,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim DE vlog 2024.2 Compiler 2024.05 May 20 2024
+# Start time: 17:29:39 on Apr 21,2025
+# vlog -reportprogress 300 "+acc" -incr ../../rtl/processing_element/processing_element.v 
+# -- Compiling module processing_element
+# 
+# Top level modules:
+# 	processing_element
+# End time: 17:29:39 on Apr 21,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim DE vlog 2024.2 Compiler 2024.05 May 20 2024
+# Start time: 17:29:39 on Apr 21,2025
+# vlog -reportprogress 300 "+acc" -incr ../../rtl/processing_element_bottom_edge/processing_element_bottom_edge.v 
+# -- Compiling module processing_element_bottom_edge
+# 
+# Top level modules:
+# 	processing_element_bottom_edge
+# End time: 17:29:39 on Apr 21,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim DE vlog 2024.2 Compiler 2024.05 May 20 2024
+# Start time: 17:29:39 on Apr 21,2025
+# vlog -reportprogress 300 "+acc" -incr ../../rtl/processing_element_top_edge/processing_element_top_edge.v 
+# -- Compiling module processing_element_top_edge
+# 
+# Top level modules:
+# 	processing_element_top_edge
+# End time: 17:29:39 on Apr 21,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim DE vlog 2024.2 Compiler 2024.05 May 20 2024
+# Start time: 17:29:39 on Apr 21,2025
+# vlog -reportprogress 300 "+acc" -incr ../../rtl/seq_mac/seq_mac.v 
+# -- Compiling module seq_mac
+# 
+# Top level modules:
+# 	seq_mac
+# End time: 17:29:40 on Apr 21,2025, Elapsed time: 0:00:01
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim DE vlog 2024.2 Compiler 2024.05 May 20 2024
+# Start time: 17:29:40 on Apr 21,2025
+# vlog -reportprogress 300 "+acc" -incr ../../rtl/qadd/qadd.v 
+# -- Compiling module qadd
+# 
+# Top level modules:
+# 	qadd
+# End time: 17:29:40 on Apr 21,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim DE vlog 2024.2 Compiler 2024.05 May 20 2024
+# Start time: 17:29:40 on Apr 21,2025
+# vlog -reportprogress 300 "+acc" -incr ../../rtl/qmult/qmult.v 
+# -- Compiling module qmult
+# 
+# Top level modules:
+# 	qmult
+# End time: 17:29:40 on Apr 21,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim DE vlog 2024.2 Compiler 2024.05 May 20 2024
+# Start time: 17:29:40 on Apr 21,2025
+# vlog -reportprogress 300 "+acc" -incr ../../rtl/norm/norm.v 
+# -- Compiling module norm
+# 
+# Top level modules:
+# 	norm
+# End time: 17:29:40 on Apr 21,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim DE vlog 2024.2 Compiler 2024.05 May 20 2024
+# Start time: 17:29:40 on Apr 21,2025
+# vlog -reportprogress 300 "+acc" -incr ../../rtl/pool/pool.v 
+# -- Compiling module pool
+# 
+# Top level modules:
+# 	pool
+# End time: 17:29:40 on Apr 21,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim DE vlog 2024.2 Compiler 2024.05 May 20 2024
+# Start time: 17:29:40 on Apr 21,2025
+# vlog -reportprogress 300 "+acc" -incr ../../rtl/activation/activation.v 
+# -- Compiling module activation
+# 
+# Top level modules:
+# 	activation
+# End time: 17:29:40 on Apr 21,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim DE vlog 2024.2 Compiler 2024.05 May 20 2024
+# Start time: 17:29:40 on Apr 21,2025
+# vlog -reportprogress 300 "+acc" -incr test_top.v 
+# -- Compiling module tb_top
+# 
+# Top level modules:
+# 	tb_top
+# End time: 17:29:40 on Apr 21,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# ** Warning: (vsim-8690) Ignoring plusarg '+acc' with -novopt in effect.
+# vsim "+acc" -t ps -lib work tb_top 
+# Start time: 17:29:40 on Apr 21,2025
+# Loading work.tb_top
+# Loading work.top
+# Loading work.ram
+# Loading work.control
+# Loading work.cfg
+# Loading work.matmul_16_16_systolic
+# Loading work.systolic_data_setup
+# Loading work.output_logic
+# Loading work.systolic_pe_matrix
+# Loading work.processing_element_top_edge
+# Loading work.seq_mac
+# Loading work.qmult
+# Loading work.qadd
+# Loading work.processing_element
+# Loading work.processing_element_bottom_edge
+# Loading work.norm
+# Loading work.pool
+# Loading work.activation
+# Loading work.dpram_original
+# @@@Test completed.
+# ** Note: $finish    : test_top.v(603)
+#    Time: 2085 ns  Iteration: 1  Instance: /tb_top
+# 1
+# Break in Module tb_top at test_top.v line 603
+# End time: 22:35:10 on Apr 21,2025, Elapsed time: 5:05:30
+# Errors: 0, Warnings: 1

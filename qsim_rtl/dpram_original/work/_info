@@ -1,0 +1,106 @@
+m255
+K4
+z2
+!s11f vlog 2024.2 2024.05, May 20 2024
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 d/user/stud/fall24/xl3455/ESP/project/qsim_rtl/qadd
+vdpram_original
+2../../rtl/dpram_original/dpram_original.v
+!s10a 1741728336
+Z1 !s110 1741732217
+!i10b 1
+!s100 7MKZ:KH9c?WeC1B938mm93
+IMi`fLdQQ[LB`gDbZA69E?2
+Z2 d/user/stud/fall24/xl3455/ESP/project/qsim_rtl/dpram_original
+w1741728336
+8../../rtl/dpram_original/dpram_original.v
+F../../rtl/dpram_original/dpram_original.v
+!i122 4
+L0 4 64
+Z3 VDg1SIo80bB@j0V0VzS_@n1
+Z4 OP;L;2024.2;79
+r1
+!s85 0
+31
+!s108 1741732216.000000
+!s107 ../../rtl/dpram_original/dpram_original.v|
+!s90 -reportprogress|300|+acc|-incr|../../rtl/dpram_original/dpram_original.v|
+!i113 1
+Z5 o+acc
+Z6 tCvgOpt 0
+vqadd
+2../../rtl/qadd/qadd.v
+!s10a 1741714738
+!s110 1741714895
+!i10b 1
+!s100 []9cDG]W=e_Hg[=`A@N4]2
+I3X9oLakEK3e`QWMcCa_BY0
+R0
+w1741714738
+8../../rtl/qadd/qadd.v
+F../../rtl/qadd/qadd.v
+!i122 0
+L0 1 10
+R3
+R4
+r1
+!s85 0
+31
+!s108 1741714895.000000
+!s107 ../../rtl/qadd/qadd.v|
+!s90 -reportprogress|300|+acc|-incr|../../rtl/qadd/qadd.v|
+!i113 1
+R5
+R6
+vtb_dpram_original
+2test_dpram_original.v
+!s10a 1741731661
+R1
+!i10b 1
+!s100 >[>g9@2NVTPah;TgiGS4W1
+IMMBZ^7aV=OCHiV7Mo::Zi0
+R2
+w1741731661
+8test_dpram_original.v
+Ftest_dpram_original.v
+!i122 5
+L0 3 90
+R3
+R4
+r1
+!s85 0
+31
+!s108 1741732217.000000
+!s107 test_dpram_original.v|
+!s90 -reportprogress|300|+acc|-incr|test_dpram_original.v|
+!i113 1
+R5
+R6
+vtb_qadd
+2test_qadd.v
+!s110 1741715087
+!i10b 1
+!s100 LIj14BJ?2[k4jW7kO3YTL3
+I4[HYmizVz@[n^XHnKc`B83
+R0
+w1741715023
+8test_qadd.v
+Ftest_qadd.v
+!i122 3
+L0 3 36
+R3
+R4
+r1
+!s85 0
+31
+!s108 1741715087.000000
+!s107 test_qadd.v|
+!s90 -reportprogress|300|+acc|-incr|test_qadd.v|
+!i113 1
+R5
+R6

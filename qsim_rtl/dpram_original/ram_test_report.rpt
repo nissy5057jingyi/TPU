@@ -1,0 +1,60 @@
+[Cycle 0] Write: Addr A = 292, Data A = 129 | Addr B = 293, Data B = 137
+[Cycle 1] Write: Addr A = 611, Data A = 13 | Addr B = 612, Data B = 13
+[Cycle 2] Write: Addr A = 101, Data A = 146 | Addr B = 102, Data B = 1
+[Cycle 3] Write: Addr A = 269, Data A = 118 | Addr B = 270, Data B = 61
+[Cycle 4] Write: Addr A = 1005, Data A = 12 | Addr B = 1006, Data B = 121
+[Cycle 5] Write: Addr A = 198, Data A = 197 | Addr B = 199, Data B = 170
+[Cycle 6] Write: Addr A = 997, Data A = 247 | Addr B = 998, Data B = 146
+[Cycle 7] Write: Addr A = 911, Data A = 114 | Addr B = 912, Data B = 206
+[Cycle 8] Write: Addr A = 744, Data A = 197 | Addr B = 745, Data B = 92
+[Cycle 9] Write: Addr A = 189, Data A = 173 | Addr B = 190, Data B = 229
+[Cycle 10] Write: Addr A = 611, Data A = 10 | Addr B = 612, Data B = 0
+[Cycle 11] Write: Addr A = 288, Data A = 42 | Addr B = 289, Data B = 157
+[Cycle 12] Write: Addr A = 662, Data A = 147 | Addr B = 663, Data B = 141
+[Cycle 13] Write: Addr A = 595, Data A = 107 | Addr B = 596, Data B = 213
+[Cycle 14] Write: Addr A = 514, Data A = 174 | Addr B = 515, Data B = 29
+[Cycle 15] Write: Addr A = 719, Data A = 35 | Addr B = 720, Data B = 10
+[Cycle 16] Write: Addr A = 714, Data A = 188 | Addr B = 715, Data B = 114
+[Cycle 17] Write: Addr A = 394, Data A = 65 | Addr B = 395, Data B = 216
+[Cycle 18] Write: Addr A = 888, Data A = 137 | Addr B = 889, Data B = 107
+[Cycle 19] Write: Addr A = 438, Data A = 70 | Addr B = 439, Data B = 46
+[Cycle 20] Write: Addr A = 700, Data A = 42 | Addr B = 701, Data B = 139
+[Cycle 21] Write: Addr A = 625, Data A = 5 | Addr B = 626, Data B = 79
+[Cycle 22] Write: Addr A = 59, Data A = 58 | Addr B = 60, Data B = 254
+[Cycle 23] Write: Addr A = 789, Data A = 113 | Addr B = 790, Data B = 89
+[Cycle 24] Write: Addr A = 866, Data A = 76 | Addr B = 867, Data B = 31
+[Cycle 25] Write: Addr A = 399, Data A = 120 | Addr B = 400, Data B = 183
+[Cycle 26] Write: Addr A = 671, Data A = 220 | Addr B = 672, Data B = 219
+[Cycle 27] Write: Addr A = 905, Data A = 201 | Addr B = 906, Data B = 208
+[Cycle 28] Write: Addr A = 215, Data A = 209 | Addr B = 216, Data B = 22
+[Cycle 29] Write: Addr A = 780, Data A = 194 | Addr B = 781, Data B = 72
+[Cycle 0] Read Correct: Addr A = 292, Data A = 129 | Addr B = 293, Data B = 137
+[Cycle 1] Read Error  : Addr A = 611, Data A = 10 (Expected 13) | Addr B = 612, Data B = 0 (Expected 13)
+[Cycle 2] Read Correct: Addr A = 101, Data A = 146 | Addr B = 102, Data B = 1
+[Cycle 3] Read Correct: Addr A = 269, Data A = 118 | Addr B = 270, Data B = 61
+[Cycle 4] Read Correct: Addr A = 1005, Data A = 12 | Addr B = 1006, Data B = 121
+[Cycle 5] Read Correct: Addr A = 198, Data A = 197 | Addr B = 199, Data B = 170
+[Cycle 6] Read Correct: Addr A = 997, Data A = 247 | Addr B = 998, Data B = 146
+[Cycle 7] Read Correct: Addr A = 911, Data A = 114 | Addr B = 912, Data B = 206
+[Cycle 8] Read Correct: Addr A = 744, Data A = 197 | Addr B = 745, Data B = 92
+[Cycle 9] Read Correct: Addr A = 189, Data A = 173 | Addr B = 190, Data B = 229
+[Cycle 10] Read Correct: Addr A = 611, Data A = 10 | Addr B = 612, Data B = 0
+[Cycle 11] Read Correct: Addr A = 288, Data A = 42 | Addr B = 289, Data B = 157
+[Cycle 12] Read Correct: Addr A = 662, Data A = 147 | Addr B = 663, Data B = 141
+[Cycle 13] Read Correct: Addr A = 595, Data A = 107 | Addr B = 596, Data B = 213
+[Cycle 14] Read Correct: Addr A = 514, Data A = 174 | Addr B = 515, Data B = 29
+[Cycle 15] Read Correct: Addr A = 719, Data A = 35 | Addr B = 720, Data B = 10
+[Cycle 16] Read Correct: Addr A = 714, Data A = 188 | Addr B = 715, Data B = 114
+[Cycle 17] Read Correct: Addr A = 394, Data A = 65 | Addr B = 395, Data B = 216
+[Cycle 18] Read Correct: Addr A = 888, Data A = 137 | Addr B = 889, Data B = 107
+[Cycle 19] Read Correct: Addr A = 438, Data A = 70 | Addr B = 439, Data B = 46
+[Cycle 20] Read Correct: Addr A = 700, Data A = 42 | Addr B = 701, Data B = 139
+[Cycle 21] Read Correct: Addr A = 625, Data A = 5 | Addr B = 626, Data B = 79
+[Cycle 22] Read Correct: Addr A = 59, Data A = 58 | Addr B = 60, Data B = 254
+[Cycle 23] Read Correct: Addr A = 789, Data A = 113 | Addr B = 790, Data B = 89
+[Cycle 24] Read Correct: Addr A = 866, Data A = 76 | Addr B = 867, Data B = 31
+[Cycle 25] Read Correct: Addr A = 399, Data A = 120 | Addr B = 400, Data B = 183
+[Cycle 26] Read Correct: Addr A = 671, Data A = 220 | Addr B = 672, Data B = 219
+[Cycle 27] Read Correct: Addr A = 905, Data A = 201 | Addr B = 906, Data B = 208
+[Cycle 28] Read Correct: Addr A = 215, Data A = 209 | Addr B = 216, Data B = 22
+[Cycle 29] Read Correct: Addr A = 780, Data A = 194 | Addr B = 781, Data B = 72

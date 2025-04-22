@@ -1,0 +1,103 @@
+m255
+K4
+z2
+!s11f vlog 2024.2 2024.05, May 20 2024
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 d/user/stud/fall24/xl3455/ESP/project/qsim_rtl/seq_mac
+vqadd
+2../../rtl/qadd/qadd.v
+Z1 !s110 1741991295
+!i10b 1
+!s100 []9cDG]W=e_Hg[=`A@N4]2
+I3X9oLakEK3e`QWMcCa_BY0
+R0
+w1741714738
+8../../rtl/qadd/qadd.v
+F../../rtl/qadd/qadd.v
+!i122 2
+L0 1 10
+Z2 VDg1SIo80bB@j0V0VzS_@n1
+Z3 OP;L;2024.2;79
+r1
+!s85 0
+31
+Z4 !s108 1741991295.000000
+!s107 ../../rtl/qadd/qadd.v|
+!s90 -reportprogress|300|+acc|-incr|../../rtl/qadd/qadd.v|
+!i113 1
+Z5 o+acc
+Z6 tCvgOpt 0
+vqmult
+2../../rtl/qmult/qmult.v
+R1
+!i10b 1
+!s100 c`YD]T_Vc2bjmE<I1:7bc1
+I9HPd^neNi1>BP4^2L;V=91
+R0
+w1740932482
+8../../rtl/qmult/qmult.v
+F../../rtl/qmult/qmult.v
+!i122 1
+L0 2 10
+R2
+R3
+r1
+!s85 0
+31
+Z7 !s108 1741991294.000000
+!s107 ../../rtl/qmult/qmult.v|
+!s90 -reportprogress|300|+acc|-incr|../../rtl/qmult/qmult.v|
+!i113 1
+R5
+R6
+vseq_mac
+2../../rtl/seq_mac/seq_mac.v
+!s110 1741991294
+!i10b 1
+!s100 SfmbEmkO4Qa4^bfOO?P_W3
+IlEc1Qgh6a5YPWVEkdcKQ31
+R0
+w1741280995
+8../../rtl/seq_mac/seq_mac.v
+F../../rtl/seq_mac/seq_mac.v
+!i122 0
+L0 3 67
+R2
+R3
+r1
+!s85 0
+31
+R7
+!s107 ../../rtl/seq_mac/seq_mac.v|
+!s90 -reportprogress|300|+acc|-incr|../../rtl/seq_mac/seq_mac.v|
+!i113 1
+R5
+R6
+vtb_seq_mac
+2test_seq_mac.v
+R1
+!i10b 1
+!s100 Zg`A8m_ac:3@4108M=Z902
+InMT_^QXPF=z0aa>?8TJGV1
+R0
+w1741100753
+8test_seq_mac.v
+Ftest_seq_mac.v
+!i122 3
+L0 3 115
+R2
+R3
+r1
+!s85 0
+31
+R4
+!s107 test_seq_mac.v|
+!s90 -reportprogress|300|+acc|-incr|test_seq_mac.v|
+!i113 1
+R5
+R6

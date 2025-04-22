@@ -1,0 +1,59 @@
+# do runsim.do
+# ** Warning: (vlib-34) Library already exists at "work".
+# Errors: 0, Warnings: 1
+# Model Technology ModelSim DE vmap 2024.2 Lib Mapping Utility 2024.05 May 20 2024
+# vmap work work 
+# Modifying modelsim.ini
+# Model Technology ModelSim DE vlog 2024.2 Compiler 2024.05 May 20 2024
+# Start time: 13:44:47 on Mar 11,2025
+# vlog -reportprogress 300 "+acc" -incr ../../rtl/qadd/qadd.v 
+# -- Skipping module qadd
+# 
+# Top level modules:
+# 	qadd
+# End time: 13:44:47 on Mar 11,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim DE vlog 2024.2 Compiler 2024.05 May 20 2024
+# Start time: 13:44:47 on Mar 11,2025
+# vlog -reportprogress 300 "+acc" -incr test_qadd.v 
+# -- Compiling module tb_qadd
+# 
+# Top level modules:
+# 	tb_qadd
+# End time: 13:44:47 on Mar 11,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# ** Warning: (vsim-8690) Ignoring plusarg '+acc' with -novopt in effect.
+# vsim "+acc" -t ps -lib work tb_qadd 
+# Start time: 13:44:47 on Mar 11,2025
+# //  ModelSim DE 2024.2 May 20 2024 Linux 4.18.0-553.40.1.el8_10.x86_64
+# //
+# // Unpublished work. Copyright 2024 Siemens
+# //
+# // This material contains trade secrets or otherwise confidential information
+# // owned by Siemens Industry Software Inc. or its affiliates (collectively,
+# // "SISW"), or its licensors. Access to and use of this information is strictly
+# // limited as set forth in the Customer's applicable agreements with SISW.
+# //
+# // This material may not be copied, distributed, or otherwise disclosed outside
+# // of the Customer's facilities without the express written permission of SISW,
+# // and may not be used in any way not expressly authorized by SISW.
+# //
+# Loading work.tb_qadd
+# Loading work.qadd
+# Time	 a	 + b	 = c
+# 0	 1524	 + fe81	 = 13a5
+# 10000	 f609	 + f663	 = ec6c
+# 20000	 1b0d	 + 198d	 = 349a
+# 30000	 e465	 + f212	 = d677
+# 40000	 0301	 + 0d0d	 = 100e
+# 50000	 1176	 + 0d3d	 = 1eb3
+# 60000	 17ed	 + 178c	 = 2f79
+# 70000	 09f9	 + e4c6	 = eebf
+# 80000	 e4c5	 + f2aa	 = d76f
+# 90000	 17e5	 + f277	 = 0a5c
+# ** Note: $finish    : test_qadd.v(35)
+#    Time: 110 ns  Iteration: 0  Instance: /tb_qadd
+# 1
+# Break in Module tb_qadd at test_qadd.v line 35
+# End time: 16:18:48 on Mar 11,2025, Elapsed time: 2:34:01
+# Errors: 0, Warnings: 1

@@ -1,0 +1,73 @@
+# do runsim.do
+# Model Technology ModelSim DE vmap 2024.2 Lib Mapping Utility 2024.05 May 20 2024
+# vmap work work 
+# Copying /tools/mentor/ModelSim/2024.2/modelsim_dlx/linuxpe/../modelsim.ini to modelsim.ini
+# Modifying modelsim.ini
+# Model Technology ModelSim DE vlog 2024.2 Compiler 2024.05 May 20 2024
+# Start time: 16:47:54 on Mar 16,2025
+# vlog -reportprogress 300 "+acc" -incr ../../rtl/ram/ram.v 
+# -- Compiling module ram
+# 
+# Top level modules:
+# 	ram
+# End time: 16:47:54 on Mar 16,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim DE vlog 2024.2 Compiler 2024.05 May 20 2024
+# Start time: 16:47:54 on Mar 16,2025
+# vlog -reportprogress 300 "+acc" -incr ../../rtl/dpram_original/dpram_original.v 
+# -- Compiling module dpram_original
+# 
+# Top level modules:
+# 	dpram_original
+# End time: 16:47:54 on Mar 16,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim DE vlog 2024.2 Compiler 2024.05 May 20 2024
+# Start time: 16:47:54 on Mar 16,2025
+# vlog -reportprogress 300 "+acc" -incr test_ram.v 
+# -- Compiling module tb_ram
+# 
+# Top level modules:
+# 	tb_ram
+# End time: 16:47:54 on Mar 16,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# ** Warning: (vsim-8690) Ignoring plusarg '+acc' with -novopt in effect.
+# vsim "+acc" -t ps -lib work tb_ram 
+# Start time: 16:47:54 on Mar 16,2025
+# //  ModelSim DE 2024.2 May 20 2024 Linux 4.18.0-553.40.1.el8_10.x86_64
+# //
+# // Unpublished work. Copyright 2024 Siemens
+# //
+# // This material contains trade secrets or otherwise confidential information
+# // owned by Siemens Industry Software Inc. or its affiliates (collectively,
+# // "SISW"), or its licensors. Access to and use of this information is strictly
+# // limited as set forth in the Customer's applicable agreements with SISW.
+# //
+# // This material may not be copied, distributed, or otherwise disclosed outside
+# // of the Customer's facilities without the express written permission of SISW,
+# // and may not be used in any way not expressly authorized by SISW.
+# //
+# Loading work.tb_ram
+# Loading work.ram
+# Loading work.dpram_original
+# Starting RAM Test...
+# Written to addr1 = 0, Data = 801046f3cf9b574cd99b024eda7e7a49
+# Written to addr1 = 1, Data = 37c7b6cfaefcbb73e250f3e307882cd8
+# Written to addr1 = 2, Data = a3b96edbfd9090f948b9ba0c847b881a
+# Written to addr1 = 3, Data = a9f69d21a5ac89a88e587bb5899a6f4e
+# Written to addr1 = 4, Data = 619dbf04cf249370915ed962087673a7
+# Written to addr1 = 5, Data = 8e271b94440b8c868e4e0199202c9141
+# Written to addr1 = 6, Data = db3831b4cd30bbf923ffbd235da14c79
+# Written to addr1 = 7, Data = c49d2cc9218643ef232ac6c614e7e2e4
+# Written to addr1 = 8, Data = a303f4473177083d01fdb8b73e882243
+# Written to addr1 = 9, Data = e8789d73c69a6beb21e12e8e5647a8d1
+# Written to addr1 = 10, Data = c97043c37c54a903de0f47ad94d573f8
+# Written to addr1 = 11, Data = 6581f4a4e587a579ced7c5fe23613286
+# Written to addr1 = 12, Data = fb32ab58312cbb08968b818448d99228
+# Written to addr1 = 13, Data = c5cf929ccb10dd9ead303a89c2cbf134
+# Written to addr1 = 14, Data = 34467b18258d032067e4b02cc2fff8ed
+# Written to addr1 = 15, Data = bc5a3f596054b9a617b29cc540d0e197
+# RAM Test Completed.
+# ** Note: $finish    : test_ram.v(64)
+#    Time: 155 ns  Iteration: 1  Instance: /tb_ram
+# End time: 16:48:01 on Mar 16,2025, Elapsed time: 0:00:07
+# Errors: 0, Warnings: 1

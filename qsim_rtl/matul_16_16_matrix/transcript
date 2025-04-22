@@ -1,0 +1,186 @@
+# do runsim.do
+# Model Technology ModelSim DE vmap 2024.2 Lib Mapping Utility 2024.05 May 20 2024
+# vmap work work 
+# Copying /tools/mentor/ModelSim/2024.2/modelsim_dlx/linuxpe/../modelsim.ini to modelsim.ini
+# Modifying modelsim.ini
+# Model Technology ModelSim DE vlog 2024.2 Compiler 2024.05 May 20 2024
+# Start time: 17:24:26 on Mar 11,2025
+# vlog -reportprogress 300 "+acc" -incr ../../rtl/matmul_16_16_systolic/matmul_16_16_systolic.v 
+# -- Compiling module matmul_16_16_systolic
+# 
+# Top level modules:
+# 	matmul_16_16_systolic
+# End time: 17:24:26 on Mar 11,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim DE vlog 2024.2 Compiler 2024.05 May 20 2024
+# Start time: 17:24:26 on Mar 11,2025
+# vlog -reportprogress 300 "+acc" -incr ../../rtl/output_logic/output_logic.v 
+# -- Compiling module output_logic
+# 
+# Top level modules:
+# 	output_logic
+# End time: 17:24:26 on Mar 11,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim DE vlog 2024.2 Compiler 2024.05 May 20 2024
+# Start time: 17:24:26 on Mar 11,2025
+# vlog -reportprogress 300 "+acc" -incr ../../rtl/systolic_data_setup/systolic_data_setup.v 
+# -- Compiling module systolic_data_setup
+# 
+# Top level modules:
+# 	systolic_data_setup
+# End time: 17:24:26 on Mar 11,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim DE vlog 2024.2 Compiler 2024.05 May 20 2024
+# Start time: 17:24:26 on Mar 11,2025
+# vlog -reportprogress 300 "+acc" -incr ../../rtl/systolic_pe_matrix/systolic_pe_matrix.v 
+# -- Compiling module systolic_pe_matrix
+# 
+# Top level modules:
+# 	systolic_pe_matrix
+# End time: 17:24:26 on Mar 11,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim DE vlog 2024.2 Compiler 2024.05 May 20 2024
+# Start time: 17:24:26 on Mar 11,2025
+# vlog -reportprogress 300 "+acc" -incr ../../rtl/processing_element_bottom_edge/processing_element_bottom_edge.v 
+# -- Compiling module processing_element_bottom_edge
+# 
+# Top level modules:
+# 	processing_element_bottom_edge
+# End time: 17:24:26 on Mar 11,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim DE vlog 2024.2 Compiler 2024.05 May 20 2024
+# Start time: 17:24:26 on Mar 11,2025
+# vlog -reportprogress 300 "+acc" -incr ../../rtl/processing_element_top_edge/processing_element_top_edge.v 
+# -- Compiling module processing_element_top_edge
+# 
+# Top level modules:
+# 	processing_element_top_edge
+# End time: 17:24:26 on Mar 11,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim DE vlog 2024.2 Compiler 2024.05 May 20 2024
+# Start time: 17:24:26 on Mar 11,2025
+# vlog -reportprogress 300 "+acc" -incr ../../rtl/processing_element/processing_element.v 
+# -- Compiling module processing_element
+# 
+# Top level modules:
+# 	processing_element
+# End time: 17:24:26 on Mar 11,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim DE vlog 2024.2 Compiler 2024.05 May 20 2024
+# Start time: 17:24:26 on Mar 11,2025
+# vlog -reportprogress 300 "+acc" -incr ../../rtl/seq_mac/seq_mac.v 
+# -- Compiling module seq_mac
+# 
+# Top level modules:
+# 	seq_mac
+# End time: 17:24:27 on Mar 11,2025, Elapsed time: 0:00:01
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim DE vlog 2024.2 Compiler 2024.05 May 20 2024
+# Start time: 17:24:27 on Mar 11,2025
+# vlog -reportprogress 300 "+acc" -incr ../../rtl/qmult/qmult.v 
+# -- Compiling module qmult
+# 
+# Top level modules:
+# 	qmult
+# End time: 17:24:27 on Mar 11,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim DE vlog 2024.2 Compiler 2024.05 May 20 2024
+# Start time: 17:24:27 on Mar 11,2025
+# vlog -reportprogress 300 "+acc" -incr ../../rtl/qadd/qadd.v 
+# -- Compiling module qadd
+# 
+# Top level modules:
+# 	qadd
+# End time: 17:24:27 on Mar 11,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim DE vlog 2024.2 Compiler 2024.05 May 20 2024
+# Start time: 17:24:27 on Mar 11,2025
+# vlog -reportprogress 300 "+acc" -incr test_matmul_16_16_matrix.v 
+# -- Compiling module tb_matmul_16_16
+# 
+# Top level modules:
+# 	tb_matmul_16_16
+# End time: 17:24:27 on Mar 11,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# ** Warning: (vsim-8690) Ignoring plusarg '+acc' with -novopt in effect.
+# vsim "+acc" -t ps -lib work tb_matmul_16_16 
+# Start time: 17:24:27 on Mar 11,2025
+# //  ModelSim DE 2024.2 May 20 2024 Linux 4.18.0-553.40.1.el8_10.x86_64
+# //
+# // Unpublished work. Copyright 2024 Siemens
+# //
+# // This material contains trade secrets or otherwise confidential information
+# // owned by Siemens Industry Software Inc. or its affiliates (collectively,
+# // "SISW"), or its licensors. Access to and use of this information is strictly
+# // limited as set forth in the Customer's applicable agreements with SISW.
+# //
+# // This material may not be copied, distributed, or otherwise disclosed outside
+# // of the Customer's facilities without the express written permission of SISW,
+# // and may not be used in any way not expressly authorized by SISW.
+# //
+# Loading work.tb_matmul_16_16
+# Loading work.matmul_16_16_systolic
+# Loading work.systolic_data_setup
+# Loading work.output_logic
+# Loading work.systolic_pe_matrix
+# Loading work.processing_element_top_edge
+# Loading work.seq_mac
+# Loading work.qmult
+# Loading work.qadd
+# Loading work.processing_element
+# Loading work.processing_element_bottom_edge
+# ** Warning: (vsim-3015) [PCDPC] - Port size (128) does not match connection size (32) for port 'a_data_in'. The port definition is at: ../../rtl/matmul_16_16_systolic/matmul_16_16_systolic.v(234).
+#    Time: 0 ps  Iteration: 0  Instance: /tb_matmul_16_16/uut File: test_matmul_16_16_matrix.v Line: 53
+# ** Warning: (vsim-3015) [PCDPC] - Port size (128) does not match connection size (32) for port 'b_data_in'. The port definition is at: ../../rtl/matmul_16_16_systolic/matmul_16_16_systolic.v(235).
+#    Time: 0 ps  Iteration: 0  Instance: /tb_matmul_16_16/uut File: test_matmul_16_16_matrix.v Line: 53
+# ** Warning: (vsim-3015) [PCDPC] - Port size (128) does not match connection size (32) for port 'c_data_in'. The port definition is at: ../../rtl/matmul_16_16_systolic/matmul_16_16_systolic.v(236).
+#    Time: 0 ps  Iteration: 0  Instance: /tb_matmul_16_16/uut File: test_matmul_16_16_matrix.v Line: 53
+# ** UI-Msg (Warning): (vish-4014) No objects found matching '/tb_matmul_16_16/'.
+# Executing ONERROR command at macro ./waveformat.do line 10
+# ** UI-Msg (Warning): (vish-4014) No objects found matching '/tb_matmul_16_16/'.
+# Executing ONERROR command at macro ./waveformat.do line 11
+# ** UI-Msg (Warning): (vish-4014) No objects found matching 'radix'.
+# Unrecognized option: "-signed/tb_matmul_16_16/" ignored.
+# Executing ONERROR command at macro ./waveformat.do line 13
+# ** UI-Msg (Warning): (vish-4014) No objects found matching 'radix'.
+# Unrecognized option: "-signed/tb_matmul_16_16/" ignored.
+# Executing ONERROR command at macro ./waveformat.do line 14
+# ** UI-Msg (Warning): (vish-4014) No objects found matching 'radix'.
+# Unrecognized option: "-signed/tb_matmul_16_16/" ignored.
+# Executing ONERROR command at macro ./waveformat.do line 15
+# ** UI-Msg (Warning): (vish-4014) No objects found matching 'radix'.
+# Unrecognized option: "-signed/tb_matmul_16_16/" ignored.
+# Executing ONERROR command at macro ./waveformat.do line 17
+# ** UI-Msg (Warning): (vish-4014) No objects found matching 'radix'.
+# Unrecognized option: "-signed/tb_matmul_16_16/" ignored.
+# Executing ONERROR command at macro ./waveformat.do line 18
+# ** UI-Msg (Warning): (vish-4014) No objects found matching '/tb_matmul_16_16/'.
+# Executing ONERROR command at macro ./waveformat.do line 19
+# ** UI-Msg (Warning): (vish-4014) No objects found matching '/tb_matmul_16_16/'.
+# Executing ONERROR command at macro ./waveformat.do line 20
+# ** UI-Msg (Warning): (vish-4014) No objects found matching '/tb_matmul_16_16/'.
+# Executing ONERROR command at macro ./waveformat.do line 21
+# ** UI-Msg (Warning): (vish-4014) No objects found matching '/tb_matmul_16_16/'.
+# Executing ONERROR command at macro ./waveformat.do line 22
+# ** UI-Msg (Warning): (vish-4014) No objects found matching '/tb_matmul_16_16/'.
+# Executing ONERROR command at macro ./waveformat.do line 24
+# ** UI-Msg (Warning): (vish-4014) No objects found matching '/tb_matmul_16_16/'.
+# Executing ONERROR command at macro ./waveformat.do line 25
+# ** UI-Msg (Warning): (vish-4014) No objects found matching '/tb_matmul_16_16/'.
+# Executing ONERROR command at macro ./waveformat.do line 26
+# ** UI-Msg (Warning): (vish-4014) No objects found matching '/tb_matmul_16_16/'.
+# Executing ONERROR command at macro ./waveformat.do line 27
+# ** UI-Msg (Warning): (vish-4014) No objects found matching '/tb_matmul_16_16/'.
+# Executing ONERROR command at macro ./waveformat.do line 29
+# ** UI-Msg (Warning): (vish-4014) No objects found matching '/tb_matmul_16_16/'.
+# Executing ONERROR command at macro ./waveformat.do line 30
+# ** UI-Msg (Warning): (vish-4014) No objects found matching '/tb_matmul_16_16/'.
+# Executing ONERROR command at macro ./waveformat.do line 31
+# Matrix Multiplication Completed!
+# C Data Output: 20202020202020202020202020202020
+# ** Note: $finish    : test_matmul_16_16_matrix.v(138)
+#    Time: 795 ns  Iteration: 0  Instance: /tb_matmul_16_16
+# 1
+# Break in Module tb_matmul_16_16 at test_matmul_16_16_matrix.v line 138
+# End time: 17:24:39 on Mar 11,2025, Elapsed time: 0:00:12
+# Errors: 0, Warnings: 4

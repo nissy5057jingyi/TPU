@@ -1,0 +1,58 @@
+m255
+K4
+z2
+!s11f vlog 2024.2 2024.05, May 20 2024
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 d/user/stud/fall24/xl3455/ESP/project/qsim_rtl/qadd
+vqadd
+2../../rtl/qadd/qadd.v
+!s10a 1741714738
+!s110 1741714895
+!i10b 1
+!s100 []9cDG]W=e_Hg[=`A@N4]2
+I3X9oLakEK3e`QWMcCa_BY0
+R0
+w1741714738
+8../../rtl/qadd/qadd.v
+F../../rtl/qadd/qadd.v
+!i122 0
+L0 1 10
+Z1 VDg1SIo80bB@j0V0VzS_@n1
+Z2 OP;L;2024.2;79
+r1
+!s85 0
+31
+!s108 1741714895.000000
+!s107 ../../rtl/qadd/qadd.v|
+!s90 -reportprogress|300|+acc|-incr|../../rtl/qadd/qadd.v|
+!i113 1
+Z3 o+acc
+Z4 tCvgOpt 0
+vtb_qadd
+2test_qadd.v
+!s110 1741715087
+!i10b 1
+!s100 LIj14BJ?2[k4jW7kO3YTL3
+I4[HYmizVz@[n^XHnKc`B83
+R0
+w1741715023
+8test_qadd.v
+Ftest_qadd.v
+!i122 3
+L0 3 36
+R1
+R2
+r1
+!s85 0
+31
+!s108 1741715087.000000
+!s107 test_qadd.v|
+!s90 -reportprogress|300|+acc|-incr|test_qadd.v|
+!i113 1
+R3
+R4

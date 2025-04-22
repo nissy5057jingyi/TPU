@@ -1,0 +1,68 @@
+# do runsim.do
+# ** Warning: (vlib-34) Library already exists at "work".
+# Errors: 0, Warnings: 1
+# Model Technology ModelSim DE vmap 2024.2 Lib Mapping Utility 2024.05 May 20 2024
+# vmap work work 
+# Modifying modelsim.ini
+# Model Technology ModelSim DE vlog 2024.2 Compiler 2024.05 May 20 2024
+# Start time: 09:56:10 on Feb 28,2025
+# vlog -reportprogress 300 "+acc" -incr ../../rtl/activation/activation.v 
+# -- Skipping module activation
+# 
+# Top level modules:
+# 	activation
+# End time: 09:56:10 on Feb 28,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim DE vlog 2024.2 Compiler 2024.05 May 20 2024
+# Start time: 09:56:10 on Feb 28,2025
+# vlog -reportprogress 300 "+acc" -incr test_activation.v 
+# -- Skipping module activation_tb
+# 
+# Top level modules:
+# 	activation_tb
+# End time: 09:56:10 on Feb 28,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# ** Warning: (vsim-8690) Ignoring plusarg '+acc' with -novopt in effect.
+# vsim "+acc" -t ps -lib work activation_tb 
+# Start time: 09:56:10 on Feb 28,2025
+# //  ModelSim DE 2024.2 May 20 2024 Linux 4.18.0-553.40.1.el8_10.x86_64
+# //
+# // Unpublished work. Copyright 2024 Siemens
+# //
+# // This material contains trade secrets or otherwise confidential information
+# // owned by Siemens Industry Software Inc. or its affiliates (collectively,
+# // "SISW"), or its licensors. Access to and use of this information is strictly
+# // limited as set forth in the Customer's applicable agreements with SISW.
+# //
+# // This material may not be copied, distributed, or otherwise disclosed outside
+# // of the Customer's facilities without the express written permission of SISW,
+# // and may not be used in any way not expressly authorized by SISW.
+# //
+# Loading work.activation_tb
+# Loading work.activation
+# ** Warning: (vsim-3015) [PCDPC] - Port size (16) does not match connection size (8) for port 'validity_mask'. The port definition is at: ../../rtl/activation/activation.v(298).
+#    Time: 0 ps  Iteration: 0  Instance: /activation_tb/uut File: test_activation.v Line: 25
+# [Random] Time=25000, activation_type=0, inp_data=ffffffffffffffffffffffffffffff81, out_data=00000000000000000000000000000000
+# [Random] Time=35000, activation_type=1, inp_data=0000000000000000000000000000000d, out_data=00000000000000000000000000000000
+# [Random] Time=45000, activation_type=1, inp_data=ffffffffffffffffffffffffffffff12, out_data=00000000000000000000000000000000
+# [Random] Time=55000, activation_type=1, inp_data=00000000000000000000000000000076, out_data=00000000000000000000000000000000
+# [Random] Time=65000, activation_type=1, inp_data=0000000000000000000000000000008c, out_data=7f7f7f7f7f7f7f7f7f7f7f7f7f7f7f7f
+# [Random] Time=75000, activation_type=0, inp_data=ffffffffffffffffffffffffffffffc5, out_data=00000000000000000000000000000048
+# [Random] Time=85000, activation_type=1, inp_data=ffffffffffffffffffffffffffffff77, out_data=00000000000000000000000000000000
+# [Random] Time=95000, activation_type=1, inp_data=000000000000000000000000000000f2, out_data=7f7f7f7f7f7f7f7f7f7f7f7f7f7f7f74
+# [Random] Time=105000, activation_type=0, inp_data=ffffffffffffffffffffffffffffffc5, out_data=0000000000000000000000000000007f
+# [Random] Time=115000, activation_type=1, inp_data=ffffffffffffffffffffffffffffff2d, out_data=00000000000000000000000000000000
+# [Random] Time=125000, activation_type=1, inp_data=0000000000000000000000000000000a, out_data=7f7f7f7f7f7f7f7f7f7f7f7f7f7f7f7f
+# [Random] Time=135000, activation_type=0, inp_data=000000000000000000000000000000aa, out_data=7f7f7f7f7f7f7f7f7f7f7f7f7f7f7f7f
+# [Random] Time=145000, activation_type=0, inp_data=ffffffffffffffffffffffffffffff13, out_data=000000000000000000000000000000aa
+# [Random] Time=155000, activation_type=1, inp_data=0000000000000000000000000000006b, out_data=00000000000000000000000000000000
+# [Random] Time=165000, activation_type=0, inp_data=ffffffffffffffffffffffffffffffae, out_data=7f7f7f7f7f7f7f7f7f7f7f7f7f7f7f7f
+# [Random] Time=175000, activation_type=1, inp_data=00000000000000000000000000000023, out_data=000000000000000000000000000000ae
+# [Random] Time=185000, activation_type=0, inp_data=ffffffffffffffffffffffffffffff3c, out_data=7f7f7f7f7f7f7f7f7f7f7f7f7f7f7f63
+# [Random] Time=195000, activation_type=0, inp_data=00000000000000000000000000000041, out_data=0000000000000000000000000000003c
+# [Random] Time=205000, activation_type=0, inp_data=ffffffffffffffffffffffffffffff89, out_data=00000000000000000000000000000000
+# [Random] Time=215000, activation_type=0, inp_data=000000000000000000000000000000c6, out_data=00000000000000000000000000000000
+# [Specific] Time=225000, activation_type=1, inp_data=0000000000000000000000000000007f, out_data=000000000000000000000000000000c6
+# ** Note: $stop    : test_activation.v(93)
+#    Time: 335 ns  Iteration: 0  Instance: /activation_tb
+# Break in Module activation_tb at test_activation.v line 93

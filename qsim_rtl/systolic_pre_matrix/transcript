@@ -1,0 +1,111 @@
+# do runsim.do
+# ** Warning: (vlib-34) Library already exists at "work".
+# Errors: 0, Warnings: 1
+# Model Technology ModelSim DE vmap 2024.2 Lib Mapping Utility 2024.05 May 20 2024
+# vmap work work 
+# Modifying modelsim.ini
+# Model Technology ModelSim DE vlog 2024.2 Compiler 2024.05 May 20 2024
+# Start time: 13:23:06 on Mar 04,2025
+# vlog -reportprogress 300 "+acc" -incr ../../rtl/processing_element/processing_element.v 
+# -- Skipping module processing_element
+# 
+# Top level modules:
+# 	processing_element
+# End time: 13:23:06 on Mar 04,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim DE vlog 2024.2 Compiler 2024.05 May 20 2024
+# Start time: 13:23:06 on Mar 04,2025
+# vlog -reportprogress 300 "+acc" -incr ../../rtl/seq_mac/seq_mac.v 
+# -- Skipping module seq_mac
+# 
+# Top level modules:
+# 	seq_mac
+# End time: 13:23:06 on Mar 04,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim DE vlog 2024.2 Compiler 2024.05 May 20 2024
+# Start time: 13:23:06 on Mar 04,2025
+# vlog -reportprogress 300 "+acc" -incr ../../rtl/qmult/qmult.v 
+# -- Skipping module qmult
+# 
+# Top level modules:
+# 	qmult
+# End time: 13:23:06 on Mar 04,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim DE vlog 2024.2 Compiler 2024.05 May 20 2024
+# Start time: 13:23:06 on Mar 04,2025
+# vlog -reportprogress 300 "+acc" -incr ../../rtl/qadd/qadd.v 
+# -- Skipping module qadd
+# 
+# Top level modules:
+# 	qadd
+# End time: 13:23:06 on Mar 04,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim DE vlog 2024.2 Compiler 2024.05 May 20 2024
+# Start time: 13:23:06 on Mar 04,2025
+# vlog -reportprogress 300 "+acc" -incr test_processing_element.v 
+# -- Compiling module tb_processing_element
+# 
+# Top level modules:
+# 	tb_processing_element
+# End time: 13:23:06 on Mar 04,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# ** Warning: (vsim-8690) Ignoring plusarg '+acc' with -novopt in effect.
+# vsim "+acc" -t ps -lib work tb_processing_element 
+# Start time: 13:23:06 on Mar 04,2025
+# //  ModelSim DE 2024.2 May 20 2024 Linux 4.18.0-553.40.1.el8_10.x86_64
+# //
+# // Unpublished work. Copyright 2024 Siemens
+# //
+# // This material contains trade secrets or otherwise confidential information
+# // owned by Siemens Industry Software Inc. or its affiliates (collectively,
+# // "SISW"), or its licensors. Access to and use of this information is strictly
+# // limited as set forth in the Customer's applicable agreements with SISW.
+# //
+# // This material may not be copied, distributed, or otherwise disclosed outside
+# // of the Customer's facilities without the express written permission of SISW,
+# // and may not be used in any way not expressly authorized by SISW.
+# //
+# Loading work.tb_processing_element
+# Loading work.processing_element
+# Loading work.seq_mac
+# Loading work.qmult
+# Loading work.qadd
+# ** UI-Msg (Warning): (vish-4014) No objects found matching 'radix'.
+# Executing ONERROR command at macro ./waveformat.do line 4
+# ** UI-Msg (Warning): (vish-4014) No objects found matching 'radix'.
+# Executing ONERROR command at macro ./waveformat.do line 5
+# ** UI-Msg (Warning): (vish-4014) No objects found matching 'radix'.
+# Executing ONERROR command at macro ./waveformat.do line 8
+# ** UI-Msg (Warning): (vish-4014) No objects found matching 'radix'.
+# Executing ONERROR command at macro ./waveformat.do line 9
+# ** UI-Msg (Warning): (vish-4014) No objects found matching 'radix'.
+# Executing ONERROR command at macro ./waveformat.do line 10
+# Time=35000 | reset=0 | in_a= 15 | in_b=    10 | out_a=  0 | out_b=     0 | out_c=  0
+# Time=45000 | reset=0 | in_a= 45 | in_b=524285 | out_a= 15 | out_b=    10 | out_c=  0
+# Time=55000 | reset=0 | in_a= 10 | in_b=524286 | out_a= 45 | out_b=524285 | out_c=  0
+# Time=65000 | reset=0 | in_a= 36 | in_b=524161 | out_a= 10 | out_b=524286 | out_c=127
+# Time=75000 | reset=0 | in_a=  9 | in_b=524131 | out_a= 36 | out_b=524161 | out_c= 15
+# Time=85000 | reset=0 | in_a= 13 | in_b=   141 | out_a=  9 | out_b=524131 | out_c=251
+# Time=95000 | reset=0 | in_a=101 | in_b=524050 | out_a= 13 | out_b=   141 | out_c=159
+# Time=105000 | reset=0 | in_a=  1 | in_b=    13 | out_a=101 | out_b=524050 | out_c=154
+# Time=115000 | reset=0 | in_a=118 | in_b=    61 | out_a=  1 | out_b=    13 | out_c=195
+# Time=125000 | reset=0 | in_a=237 | in_b=   140 | out_a=118 | out_b=    61 | out_c=221
+# Time=135000 | reset=0 | in_a=249 | in_b=524230 | out_a=237 | out_b=   140 | out_c=234
+# Time=145000 | reset=0 | in_a=197 | in_b=524202 | out_a=249 | out_b=524230 | out_c=127
+# Time=155000 | reset=0 | in_a=229 | in_b=524151 | out_a=197 | out_b=524202 | out_c=127
+# Time=165000 | reset=0 | in_a= 18 | in_b=   143 | out_a=229 | out_b=524151 | out_c=127
+# Time=175000 | reset=0 | in_a=242 | in_b=524238 | out_a= 18 | out_b=   143 | out_c=127
+# Time=185000 | reset=0 | in_a=232 | in_b=524229 | out_a=242 | out_b=524238 | out_c=127
+# Time=195000 | reset=0 | in_a= 92 | in_b=524221 | out_a=232 | out_b=524229 | out_c=127
+# Time=205000 | reset=0 | in_a= 45 | in_b=524133 | out_a= 92 | out_b=524221 | out_c=127
+# Time=215000 | reset=0 | in_a= 99 | in_b=    10 | out_a= 45 | out_b=524133 | out_c=127
+# Time=225000 | reset=0 | in_a=128 | in_b=    32 | out_a= 99 | out_b=    10 | out_c=127
+# Time=235000 | reset=0 | in_a=170 | in_b=524189 | out_a=128 | out_b=    32 | out_c=127
+# Time=245000 | reset=0 | in_a=150 | in_b=524051 | out_a=170 | out_b=524189 | out_c=127
+# Time=255000 | reset=0 | in_a= 13 | in_b=524115 | out_a=150 | out_b=524051 | out_c=127
+# ** Note: $finish    : test_processing_element.v(75)
+#    Time: 305 ns  Iteration: 0  Instance: /tb_processing_element
+# 1
+# Break in Module tb_processing_element at test_processing_element.v line 75
+# End time: 14:23:22 on Mar 04,2025, Elapsed time: 1:00:16
+# Errors: 0, Warnings: 1
