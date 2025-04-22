@@ -252,6 +252,11 @@ integer j;
 integer n;
 integer m;
 integer file;
+integer matrixA;
+integer matrixB;
+integer a_val;
+integer b_val;
+integer dummy;
 // Instantiate the top module
 top uut (
     .clk(clk),
@@ -275,26 +280,13 @@ top uut (
     .PREADY(PREADY)
 );
 
-// Clock generation
-initial begin
-    clk = 0;
-    forever #5 clk = ~clk;
-end
-
-initial begin
-    clk_mem = 0;
-    forever #5 clk_mem = ~clk_mem;
-end
-
-initial begin 
-////////////////////////////////////////////////////////////////
-//Reset
-////////////////////////////////////////////////////////////////	
+task TPU_TEST();
+	begin
 		clk = 0;
         clk_mem = 0;
         reset = 1;
         resetn = 0;
-        #20;
+        #50;
 
 ////////////////////////////////////////////////////////////////
 //Initial
@@ -357,7 +349,7 @@ initial begin
 		@(posedge clk);
 		PADDR = `REG_MATRIX_C_ADDR;
 		@(posedge clk);
-		PWDATA = 32'h0000_0020;
+		PWDATA = 32'h0000_0021;
 		$fwrite(file,"MATRIX C MAT ADDRESS STRIDE SET TO 32'h%08h\n",PWDATA);
 		$fwrite(file,"MAT ADDRESS SETTING DONE\n");
 ////////////////////////////////////////////////////////////////
@@ -394,7 +386,15 @@ initial begin
 ////////////////////////////////////////////////////////////////
 // Stage 4: WRITE DATA IN MATRIX A AND B 
 ////////////////////////////////////////////////////////////////
-		$fwrite(file,"DATA WRITING TO MATRIX A AND B...\n");
+		matrixA = $fopen("matrixA.txt","r");
+		matrixB = $fopen("matrixB.txt","r");
+		if (matrixA == 0 || matrixB == 0)begin
+			$display("ERROR: failed to open matrix input files!");
+			$finish;
+		end
+// --------------------------
+// Load matrix A
+// --------------------------
 		@(posedge clk);
         PADDR = `REG_ENABLES_ADDR;
         PWRITE = 1;
@@ -402,53 +402,40 @@ initial begin
         PENABLE = 1;
         PWDATA = 32'b0;
 		@(posedge clk);
-
-		$fwrite(file, "INPUT PADDR: `REG_ENABLES_ADDR (32'h%08h)\n", `REG_ENABLES_ADDR);
-		$fwrite(file, "INPUT PWRITE: %0d\n", PWRITE);
-		$fwrite(file, "INPUT PSEL: %0d\n", PSEL);
-		$fwrite(file, "INPUT PWDATA: %0b\n", PWDATA);
-
 		//write external data into matrix A 
+		$fwrite(file,"loading matrix A from matrixA.txt\n");
 		bram_we_a_ext = {`DESIGN_SIZE{1'b1}};
 		bram_we_b_ext = 0;
 		bram_addr_a_ext = 1;
-		//@(posedge clk);
-
-		$fwrite(file,"input for matrix A is\n");
-		for(i=0;i<=`DESIGN_SIZE;i = i+1)begin
+		for(i=0;i<`DESIGN_SIZE;i = i+1)begin
 			bram_wdata_a_ext = 0;
 			@(posedge clk);
-			for(j = 0; j<`DESIGN_SIZE;j=j+1)begin
-				
-				bram_wdata_a_ext[j*`DWIDTH +: `DWIDTH] = $urandom_range(0,9);
-				
-				$fwrite(file, "%d |", bram_wdata_a_ext[j*`DWIDTH +: `DWIDTH]);
+			for(j=0;j<`DESIGN_SIZE;j=j+1)begin
+				dummy = $fscanf(matrixA,"%d",a_val);
+				bram_wdata_a_ext[j*`DWIDTH +: `DWIDTH ] = a_val[`DWIDTH-1:0];
+				$fwrite(file, "%3d ", a_val);
 			end
-			$fwrite(file,"\n");
+			$fwrite(file, "\n");
 			@(posedge clk);
 			if (bram_we_a_ext) begin
 				bram_addr_a_ext = bram_addr_a_ext+1;
 			end
-			
 		end
-        
-		//write external data into matrix B
+// --------------------------
+// Load matrix B
+// --------------------------
+		$fwrite(file,"Loading matrix B from matrixB.txt\n");
 		bram_we_a_ext = 0;
 		bram_we_b_ext = {`DESIGN_SIZE{1'b1}};
 		bram_addr_b_ext = 1;
-
 		
-		$fwrite(file,"input for matrix B is\n");
-
-		for(n=0;n<=`DESIGN_SIZE;n = n+1)begin
+		for (n = 0; n < `DESIGN_SIZE; n = n + 1) begin
 			@(posedge clk);
 			bram_wdata_b_ext = 0;
-			
-			for(m = 0; m<`DESIGN_SIZE;m=m+1)begin
-				
-				bram_wdata_b_ext[m*`DWIDTH +: `DWIDTH] = $urandom_range(0,9);
-				
-				$fwrite(file, "%d |", bram_wdata_b_ext[m*`DWIDTH +: `DWIDTH]);
+			for (m = 0; m < `DESIGN_SIZE; m = m + 1) begin
+				dummy = $fscanf(matrixB, "%d", b_val);
+				bram_wdata_b_ext[m*`DWIDTH +: `DWIDTH] = b_val[`DWIDTH-1:0];
+				$fwrite(file, "%3d ", b_val);
 			end
 			$fwrite(file,"\n");
 			@(posedge clk);
@@ -456,7 +443,9 @@ initial begin
 				bram_addr_b_ext = bram_addr_b_ext+1;
 			end
 		end
-		$fwrite(file,"DATA WRITING TO MATRIX A AND B DONE\n");
+		
+
+
 ////////////////////////////////////////////////////////////////
 // Stage 5: START READING DATA From A and B
 ////////////////////////////////////////////////////////////////
@@ -471,14 +460,9 @@ initial begin
 		PWDATA = 32'h8000_0001;//sat_mult = 1, other enable = 0
 		@(posedge clk);
         PADDR = `REG_STDN_TPU_ADDR;
-		@(posedge clk);
+		//@(posedge clk);
         PWDATA = 32'h0000_0001;//start_tpu =1 pe_reset = 0
-		@(negedge clk);
 		$fwrite(file,"DATA READING TO MATRIX A AND B done\n");
-		@(posedge clk);
-		@(posedge clk);
-		@(posedge clk);
-		@(posedge clk);
 		@(posedge clk);
 ////////////////////////////////////////////////////////////////
 // Stage 6: set c matrix address
@@ -487,114 +471,135 @@ initial begin
 		PADDR = `REG_MATRIX_C_STRIDE_ADDR;
 		@(posedge clk);
 		PWDATA = 32'h0000_0001;
-////////////////////////////////////////////////////////////////
-// Stage 7: wait computation done
-////////////////////////////////////////////////////////////////
+		$fwrite(file,"Matrix c stride set to %08h\n",PWDATA);
 		@(posedge clk);
+////////////////////////////////////////////////////////////////
+// Stage 7: wait computation done and set parameter of norm
+////////////////////////////////////////////////////////////////
+		//set mean value
+		PADDR = `REG_MEAN_ADDR;
+		@(posedge clk);
+		PWDATA = 32'h0000_0008;
+		$fwrite(file,"Matrix A mean value set to  %08h\n",PWDATA);
+		@(posedge clk);
+
+		//set var value
+		PADDR = `REG_INV_VAR_ADDR;
+		@(posedge clk);
+		PWDATA = 32'h0000_0002;
+		$fwrite(file,"Var value set to  %08h\n",PWDATA);
+		@(posedge clk);
+
+		//set pooling size
+		PADDR = `REG_POOL_WINDOW_ADDR;
+		@(posedge clk);
+		PWDATA = 32'h0000_0002;
+		$fwrite(file,"Pooling size set to  %08h\n",PWDATA);
+		@(posedge clk);
+
+		//set activation type
+		PADDR = `REG_ACTIVATION_CSR_ADDR;
+		@(posedge clk);
+		PWDATA = 32'h0000_0001;
+		$fwrite(file,"ACTIVATION function set to  %08h\n",PWDATA);
+		@(posedge clk);
+
+		//wait computation done, start activation 
 		wait(uut.u_matmul.u_output_logic.row_latch_en == 1);
+		@(posedge clk);
 		PWRITE = 1;
         PSEL = 1;
         PENABLE = 1;
 		PADDR = `REG_ENABLES_ADDR;
 		PWDATA = 32'h0000_000f;//sat_mult = 1, other enable = 1
+		wait(uut.done_tpu == 1);
+	end
+endtask
 
-////////////////////////////////////////////////////////////////
-// Stage 8:  star normalization
-////////////////////////////////////////////////////////////////
+task write_result_to_file();
+    integer i, j;
+    reg [`DWIDTH-1:0] val_0;
+	reg [`DWIDTH-1:0] val_1;
+	reg [`DWIDTH-1:0] val_2;
+	reg [`DWIDTH-1:0] val_3;
+	reg [`DWIDTH-1:0] val_4;
+	reg [`DWIDTH-1:0] val_5;
+	reg [`DWIDTH-1:0] val_6;
+	reg [`DWIDTH-1:0] val_7;
+	reg [`DWIDTH-1:0] val_8;
+	reg [`DWIDTH-1:0] val_9;
+	reg [`DWIDTH-1:0] val_10;
+	reg [`DWIDTH-1:0] val_11;
+	reg [`DWIDTH-1:0] val_12;
+	reg [`DWIDTH-1:0] val_13;
+	reg [`DWIDTH-1:0] val_14;
+	reg [`DWIDTH-1:0] val_15;
+begin
+    $fwrite(file, "\n==== Output Matrix C ====\n");
+    bram_addr_a_ext = 33; // or whatever base C address is (check your `REG_MATRIX_C_ADDR` + offset)
+    for (i = 0; i < `DESIGN_SIZE; i = i + 1) begin
+        @(posedge clk); // wait for read valid
 
+        val_0 = uut.matrix_A.genblk1[0].dp1.ram[bram_addr_a_ext]; // adjust based on your RAM hierarchy
+        $fwrite(file, "%3d ", val_0);
+		val_1 = uut.matrix_A.genblk1[1].dp1.ram[bram_addr_a_ext]; // adjust based on your RAM hierarchy
+        $fwrite(file, "%3d ", val_1);
+		val_2 = uut.matrix_A.genblk1[2].dp1.ram[bram_addr_a_ext]; // adjust based on your RAM hierarchy
+        $fwrite(file, "%3d ", val_2);
+		val_3 = uut.matrix_A.genblk1[3].dp1.ram[bram_addr_a_ext]; // adjust based on your RAM hierarchy
+        $fwrite(file, "%3d ", val_3);
+		val_4 = uut.matrix_A.genblk1[4].dp1.ram[bram_addr_a_ext]; // adjust based on your RAM hierarchy
+        $fwrite(file, "%3d ", val_4);
+		val_5 = uut.matrix_A.genblk1[5].dp1.ram[bram_addr_a_ext]; // adjust based on your RAM hierarchy
+        $fwrite(file, "%3d ", val_5);
+		val_6 = uut.matrix_A.genblk1[6].dp1.ram[bram_addr_a_ext]; // adjust based on your RAM hierarchy
+        $fwrite(file, "%3d ", val_6);
+		val_7 = uut.matrix_A.genblk1[7].dp1.ram[bram_addr_a_ext]; // adjust based on your RAM hierarchy
+        $fwrite(file, "%3d ", val_7);
+		val_8 = uut.matrix_A.genblk1[8].dp1.ram[bram_addr_a_ext]; // adjust based on your RAM hierarchy
+        $fwrite(file, "%3d ", val_8);
+		val_9 = uut.matrix_A.genblk1[9].dp1.ram[bram_addr_a_ext]; // adjust based on your RAM hierarchy
+        $fwrite(file, "%3d ", val_9);
+		val_10 = uut.matrix_A.genblk1[10].dp1.ram[bram_addr_a_ext]; // adjust based on your RAM hierarchy
+        $fwrite(file, "%3d ", val_10);
+		val_11 = uut.matrix_A.genblk1[11].dp1.ram[bram_addr_a_ext]; // adjust based on your RAM hierarchy
+        $fwrite(file, "%3d ", val_11);
+		val_12 = uut.matrix_A.genblk1[12].dp1.ram[bram_addr_a_ext]; // adjust based on your RAM hierarchy
+        $fwrite(file, "%3d ", val_12);
+		val_13 = uut.matrix_A.genblk1[13].dp1.ram[bram_addr_a_ext]; // adjust based on your RAM hierarchy
+        $fwrite(file, "%3d ", val_13);
+		val_14 = uut.matrix_A.genblk1[14].dp1.ram[bram_addr_a_ext]; // adjust based on your RAM hierarchy
+        $fwrite(file, "%3d ", val_14);
+		val_15 = uut.matrix_A.genblk1[15].dp1.ram[bram_addr_a_ext]; // adjust based on your RAM hierarchy
+        $fwrite(file, "%3d ", val_15);
 
-
-
-
-		/*reset = 1;
-        resetn = 0;
-        #20;
-		reset = 0;
-        resetn = 1;
-		$fwrite(file,"DATA WRITING TO MATRIX A AND B...\n");
+        $fwrite(file, "\n");
 		@(posedge clk);
-        PADDR = `REG_ENABLES_ADDR;
-        PWRITE = 1;
-        PSEL = 1;
-        PENABLE = 1;
-        PWDATA = 32'b0;
+        bram_addr_a_ext = bram_addr_a_ext - 1;
+    end
+end
+endtask
+
+// Clock generation
+initial begin
+    clk = 0;
+    forever #5 clk = ~clk;
+end
+
+initial begin
+    clk_mem = 0;
+    forever #5 clk_mem = ~clk_mem;
+end
+
+initial begin 
+
+		TPU_TEST();
+		//TPU_TEST();
 		@(posedge clk);
-
-		$fwrite(file, "INPUT PADDR: `REG_ENABLES_ADDR (32'h%08h)\n", `REG_ENABLES_ADDR);
-		$fwrite(file, "INPUT PWRITE: %0d\n", PWRITE);
-		$fwrite(file, "INPUT PSEL: %0d\n", PSEL);
-		$fwrite(file, "INPUT PWDATA: %0b\n", PWDATA);
-
-		//write external data into matrix A 
-		bram_we_a_ext = {`DESIGN_SIZE{1'b1}};
-		bram_we_b_ext = 0;
-		bram_addr_a_ext = 0;
-		//@(posedge clk);
-
-		$fwrite(file,"input for matrix A is\n");
-		for(i=0;i<=`DESIGN_SIZE;i = i+1)begin
-			//bram_wdata_a_ext = 0;
-			@(posedge clk);
-			for(j = 0; j<`DESIGN_SIZE;j=j+1)begin
-				
-				bram_wdata_a_ext[j*`DWIDTH +: `DWIDTH] = ($random%19)-9;
-				
-				$fwrite(file, "%d |", bram_wdata_a_ext[j*`DWIDTH +: `DWIDTH]);
-			end
-			$fwrite(file,"\n");
-			@(posedge clk);
-			if (bram_we_a_ext) begin
-				bram_addr_a_ext = bram_addr_a_ext+1;
-			end
-			
-		end
-        
-		//write external data into matrix B
-		bram_we_a_ext = 0;
-		bram_we_b_ext = {`DESIGN_SIZE{1'b1}};
-		bram_addr_b_ext = 0;
-
-		
-		$fwrite(file,"input for matrix B is\n");
-
-		for(n=0;n<=`DESIGN_SIZE;n = n+1)begin
-			@(posedge clk);
-			bram_wdata_b_ext = 0;
-			
-			for(m = 0; m<`DESIGN_SIZE;m=m+1)begin
-				
-				bram_wdata_b_ext[m*`DWIDTH +: `DWIDTH] = ($random%19)-9;
-				
-				$fwrite(file, "%d |", bram_wdata_b_ext[m*`DWIDTH +: `DWIDTH]);
-			end
-			$fwrite(file,"\n");
-			@(posedge clk);
-			if(bram_we_b_ext)begin
-				bram_addr_b_ext = bram_addr_b_ext+1;
-			end
-		end
-		$fwrite(file,"DATA WRITING TO MATRIX A AND B DONE\n");
-////////////////////////////////////////////////////////////////
-// Stage 7: START READING DATA From A and B
-////////////////////////////////////////////////////////////////
-		PWRITE = 1;
-        PSEL = 1;
-        PENABLE = 1;
-		bram_we_a_ext = 0;
-		bram_we_b_ext = 0;
-		$fwrite(file,"DATA READING TO MATRIX A AND B ...\n");
 		@(posedge clk);
-		PADDR = `REG_ENABLES_ADDR;
-		PWDATA = 32'h8000_0001;//sat_mult = 1, other enable = 0
-		@(posedge clk);
-        PADDR = `REG_STDN_TPU_ADDR;
-		@(posedge clk);
-        PWDATA = 32'h0000_0001;//start_tpu =1 pe_reset = 0
-		@(negedge clk);
-		$fwrite(file,"DATA READING TO MATRIX A AND B done\n");*/
-        #2000; // Delay to allow some operations
+		write_result_to_file();
 		$fclose(file);
-        //$display("Test completed.");
+        $display("@@@Test completed.");
         $finish;
 end
 endmodule
