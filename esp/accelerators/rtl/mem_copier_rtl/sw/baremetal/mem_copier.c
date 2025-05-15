@@ -10,17 +10,15 @@
 #include <esp_probe.h>
 #include <fixed_point.h>
 
-typedef int32_t token_t;
+typedef int64_t token_t;
 
 static unsigned DMA_WORD_PER_BEAT(unsigned _st) { return (sizeof(void *) / _st); }
 
-#define SLD_MEMORY_COPIER 0x075
-#define DEV_NAME             "sld,memory_copier_rtl"
+#define SLD_MIN_COPIER 0x04a
+#define DEV_NAME             "sld,min_copier_rtl"
 
 /* <<--params-->> */
-const int32_t data_in = 32;
-const int32_t enable = 1;
-const int32_t data_out = 32;
+const int32_t data_in = 16;
 
 static unsigned in_words_adj;
 static unsigned out_words_adj;
@@ -38,9 +36,9 @@ static unsigned mem_size;
 
 /* User defined registers */
 /* <<--regs-->> */
-#define MEMORY_COPIER_DATA_IN_REG 0x48
-#define MEMORY_COPIER_ENABLE_REG 0x44
-#define MEMORY_COPIER_DATA_OUT_REG 0x40
+#define MIN_COPIER_DATA_IN_REG 0x40
+#define MIN_COPIER_CONF_DONE_REG 0x34
+#define DEBUG_REG 0x00
 
 static int validate_buf(token_t *out, token_t *gold)
 {
@@ -49,7 +47,7 @@ static int validate_buf(token_t *out, token_t *gold)
     unsigned errors = 0;
 
     for (i = 0; i < 1; i++)
-        for (j = 0; j < data_out*data_out; j++)
+        for (j = 0; j < data_in; j++)
             if (gold[i * out_words_adj + j] != out[i * out_words_adj + j]) errors++;
 
     return errors;
@@ -61,11 +59,11 @@ static void init_buf(token_t *in, token_t *gold)
     int j;
 
     for (i = 0; i < 1; i++)
-        for (j = 0; j < 2*data_out*data_out; j++)
+        for (j = 0; j < data_in; j++)
             in[i * in_words_adj + j] = (token_t)j;
 
     for (i = 0; i < 1; i++)
-        for (j = 0; j < data_out*data_out; j++)
+        for (j = 0; j < data_in; j++)
             gold[i * out_words_adj + j] = (token_t)j;
 }
 
@@ -82,14 +80,14 @@ int main(int argc, char *argv[])
     token_t *gold;
     unsigned errors = 0;
     unsigned coherence;
-
+    
     if (DMA_WORD_PER_BEAT(sizeof(token_t)) == 0) {
-        in_words_adj  = data_out*data_out;
-        out_words_adj = data_out*data_out;
+        in_words_adj  = data_in;
+        out_words_adj = data_in;
     }
     else {
-        in_words_adj  = round_up(data_out*data_out, DMA_WORD_PER_BEAT(sizeof(token_t)));
-        out_words_adj = round_up(data_out*data_out, DMA_WORD_PER_BEAT(sizeof(token_t)));
+        in_words_adj  = round_up(data_in, DMA_WORD_PER_BEAT(sizeof(token_t)));
+        out_words_adj = round_up(data_in, DMA_WORD_PER_BEAT(sizeof(token_t)));
     }
     in_len     = in_words_adj * (1);
     out_len    = out_words_adj * (1);
@@ -97,13 +95,13 @@ int main(int argc, char *argv[])
     out_size   = out_len * sizeof(token_t);
     out_offset = in_len;
     mem_size   = (out_offset * sizeof(token_t)) + out_size;
-
+    printf("  this is a new version hhahahaahahhah\n");
     // Search for the device
     printf("Scanning device tree... \n");
 
-    ndev = probe(&espdevs, VENDOR_SLD, SLD_MEMORY_COPIER, DEV_NAME);
+    ndev = probe(&espdevs, VENDOR_SLD, SLD_MIN_COPIER, DEV_NAME);
     if (ndev == 0) {
-        printf("memory_copier not found\n");
+        printf("min_copier not found\n");
         return 0;
     }
 
@@ -155,28 +153,38 @@ int main(int argc, char *argv[])
 
             // Use the following if input and output data are not allocated at the default offsets
             iowrite32(dev, SRC_OFFSET_REG, 0x0);
-            iowrite32(dev, DST_OFFSET_REG, 0x0);
-
+            iowrite32(dev, DST_OFFSET_REG, out_offset);
+            iowrite32(dev, MIN_COPIER_CONF_DONE_REG, 0); // Ensure it starts with 0
+            printf("Initial state = %x\n", ioread32(dev, DEBUG_REG));
             // Pass accelerator-specific configuration parameters
             /* <<--regs-config-->> */
-			iowrite32(dev, MEMORY_COPIER_DATA_IN_REG, data_in);
-			iowrite32(dev, MEMORY_COPIER_ENABLE_REG, enable);
-			iowrite32(dev, MEMORY_COPIER_DATA_OUT_REG, data_out);
+			iowrite32(dev, MIN_COPIER_DATA_IN_REG, data_in);
+            printf("Setting data_in = %d\n", data_in);
 
             // Flush (customize coherence model here)
             esp_flush(coherence);
-
+            // Kick off accelerator
+            iowrite32(dev, MIN_COPIER_CONF_DONE_REG, 1);
+            printf("CONF_DONE_REG after write: %u\n", ioread32(dev, MIN_COPIER_CONF_DONE_REG));
+            printf("  abcabcacb..\n");
             // Start accelerators
             printf("  Start...\n");
+            printf("  state = %x\n", ioread32(dev, DEBUG_REG));
+            printf("State before start = %x\n", ioread32(dev, DEBUG_REG));
             iowrite32(dev, CMD_REG, CMD_MASK_START);
-
+            printf("  state = %x\n", ioread32(dev, DEBUG_REG));
             // Wait for completion
             done = 0;
             while (!done) {
+                unsigned state = ioread32(dev, DEBUG_REG);
+                printf("state = %x\n", state);
                 done = ioread32(dev, STATUS_REG);
                 done &= STATUS_MASK_DONE;
             }
+            printf("  state = %x\n", ioread32(dev, DEBUG_REG));
             iowrite32(dev, CMD_REG, 0x0);
+            printf("  state = %x\n", ioread32(dev, DEBUG_REG));
+            iowrite32(dev, MIN_COPIER_CONF_DONE_REG, 0);
 
             printf("  Done\n");
             printf("  validating...\n");

@@ -10,32 +10,22 @@
 #include <esp_probe.h>
 #include <fixed_point.h>
 
-typedef int8_t token_t;
+typedef int32_t token_t;  // TPU uses 32-bit data
 
 static unsigned DMA_WORD_PER_BEAT(unsigned _st) { return (sizeof(void *) / _st); }
 
-#define SLD_TPU 0x04a
-#define DEV_NAME "sld,tpu_rtl"
+#define SLD_TPU_BASIC_DMA32 0x04b  // Unique device ID for TPU
+#define DEV_NAME            "sld,tpu_rtl_basic_dma32"
 
-/* TPU Configuration Registers */
-/* These values need to be properly set based on the hardware configuration */
-/* Based on the Verilog file, we need to configure multiple registers */
-const int32_t reg0 = 0x0F; /* Enable matmul, norm, pool, activation */
-const int32_t reg1 = 0x10; /* Matrix A starting address */
-const int32_t reg2 = 0x20; /* Matrix B starting address */
-const int32_t reg3 = 0x30; /* Matrix C starting address */
-const int32_t reg4 = 0x01; /* Mean value for normalization */
-const int32_t reg5 = 0x01; /* Inverse variance for normalization */
-const int32_t reg6 = 0x02; /* Pooling window size */
-const int32_t reg7 = 0x01; /* Activation type (ReLU=0, TanH=1) */
-const int32_t reg8 = 0x10; /* Matrix A stride */
-const int32_t reg9 = 0x10; /* Matrix B stride */
-const int32_t reg10 = 0x10; /* Matrix C stride and matrix size */
+/* Configuration parameters for the TPU */
+const int32_t data_in_size = 128;   // Number of input elements
+const int32_t data_out_size = 128;  // Number of output elements
+const int32_t activation_type = 1;  // 0: None, 1: ReLU, 2: TanH
+const int32_t pooling_size = 2;     // 1: 1x1 (no pooling), 2: 2x2, 4: 4x4
+const int32_t norm_enable = 1;      // 0: Disabled, 1: Enabled
 
-/* Matrix dimensions and TPU configuration */
-#define MATRIX_SIZE reg10
-#define MATRIX_INPUTS (2*MATRIX_SIZE*MATRIX_SIZE) /* A and B matrices */
-#define MATRIX_OUTPUTS (MATRIX_SIZE*MATRIX_SIZE) /* C matrix */
+/* Matrix dimensions for test */
+#define MATRIX_DIM 8 // 8x8 matrix (64 elements)
 
 static unsigned in_words_adj;
 static unsigned out_words_adj;
@@ -51,78 +41,130 @@ static unsigned mem_size;
 #define CHUNK_SIZE  BIT(CHUNK_SHIFT)
 #define NCHUNK(_sz) ((_sz % CHUNK_SIZE == 0) ? (_sz / CHUNK_SIZE) : (_sz / CHUNK_SIZE) + 1)
 
-/* User defined registers */
-#define TPU_REG8_REG 0x68  /* Matrix A stride */
-#define TPU_REG9_REG 0x64  /* Matrix B stride */
-#define TPU_REG4_REG 0x60  /* Mean value */
-#define TPU_REG5_REG 0x5c  /* Inverse variance */
-#define TPU_REG6_REG 0x58  /* Pooling window size */
-#define TPU_REG7_REG 0x54  /* Activation type */
-#define TPU_REG0_REG 0x50  /* Enable flags */
-#define TPU_REG1_REG 0x4c  /* Matrix A address */
-#define TPU_REG2_REG 0x48  /* Matrix B address */
-#define TPU_REG3_REG 0x44  /* Matrix C address */
-#define TPU_REG10_REG 0x40 /* Matrix C stride / Matrix size */
+/* User defined registers - match the wrapper RTL module */
+#define TPU_DATA_IN_REG         0x40
+#define TPU_DATA_OUT_REG        0x44
+#define TPU_ACTIVATION_REG      0x48
+#define TPU_POOLING_REG         0x4C
+#define TPU_NORM_REG            0x50
+#define TPU_CONF_DONE_REG       0x34
 
-/* Configuration register for start/done */
-#define TPU_START_REG 0x70  /* Start TPU execution */
-
-/* Function to initialize input matrices and expected output */
-static void init_buf(token_t *in, token_t *gold)
-{
-    int i, j, k;
-    token_t *matA, *matB;
-    
-    /* Initialize matrix A and B with some pattern */
-    matA = in;
-    matB = in + MATRIX_SIZE * MATRIX_SIZE;
-    
-    /* Initialize matrices with pattern */
-    for (i = 0; i < MATRIX_SIZE; i++) {
-        for (j = 0; j < MATRIX_SIZE; j++) {
-            matA[i * MATRIX_SIZE + j] = (token_t)(i + j);  /* Matrix A */
-            matB[i * MATRIX_SIZE + j] = (token_t)(i * j);  /* Matrix B */
+/* Simple matrix multiplication to generate gold output */
+static void matrix_multiply(token_t *a, token_t *b, token_t *c, int dim) {
+    for (int i = 0; i < dim; i++) {
+        for (int j = 0; j < dim; j++) {
+            c[i * dim + j] = 0;
+            for (int k = 0; k < dim; k++) {
+                c[i * dim + j] += a[i * dim + k] * b[k * dim + j];
+            }
+            
+            // Apply ReLU activation if enabled
+            if (activation_type == 1 && c[i * dim + j] < 0) {
+                c[i * dim + j] = 0;
+            }
+            // Apply TanH activation if enabled (simplified tanh approximation)
+            else if (activation_type == 2) {
+                if (c[i * dim + j] > 127) c[i * dim + j] = 127;
+                else if (c[i * dim + j] < -127) c[i * dim + j] = -127;
+            }
         }
     }
     
-    /* Calculate expected output (matrix multiplication) */
-    for (i = 0; i < MATRIX_SIZE; i++) {
-        for (j = 0; j < MATRIX_SIZE; j++) {
-            token_t sum = 0;
-            for (k = 0; k < MATRIX_SIZE; k++) {
-                sum += matA[i * MATRIX_SIZE + k] * matB[k * MATRIX_SIZE + j];
+    // Apply pooling if enabled (simple 2x2 max pooling)
+    if (pooling_size > 1) {
+        int pool_dim = dim / pooling_size;
+        token_t *temp = (token_t *) malloc(dim * dim * sizeof(token_t));
+        memcpy(temp, c, dim * dim * sizeof(token_t));
+        
+        for (int i = 0; i < pool_dim; i++) {
+            for (int j = 0; j < pool_dim; j++) {
+                token_t max_val = temp[i * 2 * dim + j * 2];
+                for (int pi = 0; pi < pooling_size; pi++) {
+                    for (int pj = 0; pj < pooling_size; pj++) {
+                        token_t val = temp[(i * 2 + pi) * dim + (j * 2 + pj)];
+                        if (val > max_val) max_val = val;
+                    }
+                }
+                c[i * pool_dim + j] = max_val;
             }
-            /* Apply normalization, pooling and activation if enabled */
-            /* For simplicity, just storing matrix multiply result */
-            gold[i * MATRIX_SIZE + j] = sum;
         }
+        free(temp);
     }
 }
 
-/* Function to validate the output against expected results */
-static int validate_buf(token_t *out, token_t *gold)
-{
-    int i, j;
-    unsigned errors = 0;
+static int validate_buf(token_t *out, token_t *gold) {
+    int errors = 0;
+    int output_size = data_out_size;
     
-    /* Check results */
-    for (i = 0; i < MATRIX_SIZE; i++) {
-        for (j = 0; j < MATRIX_SIZE; j++) {
-            if (gold[i * MATRIX_SIZE + j] != out[i * MATRIX_SIZE + j]) {
-                errors++;
-                printf("Mismatch at [%d,%d]: expected %d, got %d\n", 
-                       i, j, gold[i * MATRIX_SIZE + j], out[i * MATRIX_SIZE + j]);
-                /* Limit error reporting */
-                if (errors > 10) return errors;
+    // If pooling is enabled, the output size is reduced
+    if (pooling_size > 1) {
+        output_size = data_out_size / (pooling_size * pooling_size);
+    }
+    
+    for (int i = 0; i < output_size; i++) {
+        if (gold[i] != out[i]) {
+            printf("Error at index %d: expected %d, got %d\n", i, gold[i], out[i]);
+            errors++;
+            // Limit error reporting to avoid flood
+            if (errors > 10) {
+                printf("Too many errors, stopping validation...\n");
+                break;
             }
         }
     }
-    
+
     return errors;
 }
 
-int main(int argc, char *argv[])
-{
+static void init_buf(token_t *in, token_t *gold) {
+    // Split input buffer into matrix A and matrix B
+    token_t *matrix_a = in;
+    token_t *matrix_b = in + MATRIX_DIM * MATRIX_DIM;
+    
+    // Initialize matrix A with incrementing values
+    for (int i = 0; i < MATRIX_DIM; i++) {
+        for (int j = 0; j < MATRIX_DIM; j++) {
+            matrix_a[i * MATRIX_DIM + j] = i + j;
+        }
+    }
+    
+    // Initialize matrix B with some pattern
+    for (int i = 0; i < MATRIX_DIM; i++) {
+        for (int j = 0; j < MATRIX_DIM; j++) {
+            matrix_b[i * MATRIX_DIM + j] = (i == j) ? 2 : 1; // Simple identity matrix with offset
+        }
+    }
+    
+    // Calculate expected output for validation
+    matrix_multiply(matrix_a, matrix_b, gold, MATRIX_DIM);
+    
+    // Print sample of input and expected output
+    printf("Sample input matrix A:\n");
+    for (int i = 0; i < 4; i++) {
+        for (int j = 0; j < 4; j++) {
+            printf("%4d ", matrix_a[i * MATRIX_DIM + j]);
+        }
+        printf("\n");
+    }
+    
+    printf("Sample input matrix B:\n");
+    for (int i = 0; i < 4; i++) {
+        for (int j = 0; j < 4; j++) {
+            printf("%4d ", matrix_b[i * MATRIX_DIM + j]);
+        }
+        printf("\n");
+    }
+    
+    printf("Sample expected output:\n");
+    for (int i = 0; i < 4; i++) {
+        for (int j = 0; j < 4; j++) {
+            printf("%4d ", gold[i * MATRIX_DIM + j]);
+        }
+        printf("\n");
+    }
+}
+
+int main(int argc, char *argv[]) {
     int i;
     int n;
     int ndev;
@@ -135,35 +177,37 @@ int main(int argc, char *argv[])
     unsigned errors = 0;
     unsigned coherence;
 
-    /* Calculate adjusted sizes for DMA transfers */
+    // Calculate DMA word adjustments
     if (DMA_WORD_PER_BEAT(sizeof(token_t)) == 0) {
-        in_words_adj = MATRIX_INPUTS;
-        out_words_adj = MATRIX_OUTPUTS;
+        in_words_adj  = data_in_size;
+        out_words_adj = data_out_size;
     } else {
-        in_words_adj = round_up(MATRIX_INPUTS, DMA_WORD_PER_BEAT(sizeof(token_t)));
-        out_words_adj = round_up(MATRIX_OUTPUTS, DMA_WORD_PER_BEAT(sizeof(token_t)));
+        in_words_adj  = round_up(data_in_size, DMA_WORD_PER_BEAT(sizeof(token_t)));
+        out_words_adj = round_up(data_out_size, DMA_WORD_PER_BEAT(sizeof(token_t)));
     }
     
-    in_len = in_words_adj;
-    out_len = out_words_adj;
-    in_size = in_len * sizeof(token_t);
-    out_size = out_len * sizeof(token_t);
+    in_len     = in_words_adj;
+    out_len    = out_words_adj;
+    in_size    = in_len * sizeof(token_t);
+    out_size   = out_len * sizeof(token_t);
     out_offset = in_len;
-    mem_size = (out_offset * sizeof(token_t)) + out_size;
+    mem_size   = (out_offset * sizeof(token_t)) + out_size;
 
-    /* Search for the TPU device */
-    printf("Scanning device tree...\n");
-    ndev = probe(&espdevs, VENDOR_SLD, SLD_TPU, DEV_NAME);
+    // Search for the device
+    printf("Scanning device tree for %s...\n", DEV_NAME);
+
+    ndev = probe(&espdevs, VENDOR_SLD, SLD_TPU_BASIC_DMA32, DEV_NAME);
     if (ndev == 0) {
-        printf("TPU device not found\n");
+        printf("TPU accelerator not found\n");
         return 0;
     }
 
     for (n = 0; n < ndev; n++) {
         printf("**************** %s.%d ****************\n", DEV_NAME, n);
+
         dev = &espdevs[n];
 
-        /* Check DMA capabilities */
+        // Check DMA capabilities
         if (ioread32(dev, PT_NCHUNK_MAX_REG) == 0) {
             printf("  -> scatter-gather DMA is disabled. Abort.\n");
             return 0;
@@ -174,12 +218,12 @@ int main(int argc, char *argv[])
             return 0;
         }
 
-        /* Allocate memory */
+        // Allocate memory
         gold = aligned_malloc(out_size);
-        mem = aligned_malloc(mem_size);
+        mem  = aligned_malloc(mem_size);
         printf("  memory buffer base-address = %p\n", mem);
 
-        /* Allocate and populate page table */
+        // Allocate and populate page table
         ptable = aligned_malloc(NCHUNK(mem_size) * sizeof(unsigned *));
         for (i = 0; i < NCHUNK(mem_size); i++)
             ptable[i] = (unsigned *)&mem[i * (CHUNK_SIZE / sizeof(token_t))];
@@ -187,13 +231,14 @@ int main(int argc, char *argv[])
         printf("  ptable = %p\n", ptable);
         printf("  nchunk = %lu\n", NCHUNK(mem_size));
 
+        // Test different coherence models
         for (coherence = ACC_COH_NONE; coherence <= ACC_COH_RECALL; coherence++) {
             printf("  --------------------\n");
             printf("  Testing coherence mode: %d\n", coherence);
-            printf("  Generate input matrices...\n");
+            printf("  Generate input data...\n");
             init_buf(mem, gold);
 
-            /* Pass common configuration parameters */
+            // Pass common configuration parameters
             iowrite32(dev, COHERENCE_REG, coherence);
 
 #ifndef __sparc
@@ -204,50 +249,49 @@ int main(int argc, char *argv[])
             iowrite32(dev, PT_NCHUNK_REG, NCHUNK(mem_size));
             iowrite32(dev, PT_SHIFT_REG, CHUNK_SHIFT);
 
-            /* Set up DMA source and destination offsets */
+            // Use the following if input and output data are not allocated at the default offsets
             iowrite32(dev, SRC_OFFSET_REG, 0x0);
             iowrite32(dev, DST_OFFSET_REG, out_offset * sizeof(token_t));
 
-            /* Configure TPU registers based on Verilog definitions */
-            iowrite32(dev, TPU_REG0_REG, reg0);     /* Enable flags */
-            iowrite32(dev, TPU_REG1_REG, reg1);     /* Matrix A address */
-            iowrite32(dev, TPU_REG2_REG, reg2);     /* Matrix B address */
-            iowrite32(dev, TPU_REG3_REG, reg3);     /* Matrix C address */
-            iowrite32(dev, TPU_REG4_REG, reg4);     /* Mean value */
-            iowrite32(dev, TPU_REG5_REG, reg5);     /* Inverse variance */
-            iowrite32(dev, TPU_REG6_REG, reg6);     /* Pooling window size */
-            iowrite32(dev, TPU_REG7_REG, reg7);     /* Activation type */
-            iowrite32(dev, TPU_REG8_REG, reg8);     /* Matrix A stride */
-            iowrite32(dev, TPU_REG9_REG, reg9);     /* Matrix B stride */
-            iowrite32(dev, TPU_REG10_REG, reg10);   /* Matrix size/C stride */
+            // Pass TPU-specific configuration parameters
+            iowrite32(dev, TPU_DATA_IN_REG, data_in_size);
+            iowrite32(dev, TPU_DATA_OUT_REG, data_out_size);
+            iowrite32(dev, TPU_ACTIVATION_REG, activation_type);
+            iowrite32(dev, TPU_POOLING_REG, pooling_size);
+            iowrite32(dev, TPU_NORM_REG, norm_enable);
 
-            /* Flush cache for coherence */
+            // Flush (customize coherence model here)
             esp_flush(coherence);
-
-            /* Start the TPU */
-            printf("  Starting TPU operation...\n");
+            
+            // Kick off accelerator
+            printf("  Setting configuration done...\n");
+            iowrite32(dev, TPU_CONF_DONE_REG, 1);
+            
+            // Start accelerator
+            printf("  Starting TPU accelerator...\n");
             iowrite32(dev, CMD_REG, CMD_MASK_START);
 
-            /* Wait for completion */
+            // Wait for completion
             done = 0;
             while (!done) {
                 done = ioread32(dev, STATUS_REG);
                 done &= STATUS_MASK_DONE;
             }
+            
+            // Reset control signals
             iowrite32(dev, CMD_REG, 0x0);
+            iowrite32(dev, TPU_CONF_DONE_REG, 0);
 
-            printf("  TPU operation completed\n");
+            printf("  TPU execution completed\n");
             printf("  Validating results...\n");
 
-            /* Validate the output */
+            /* Validation */
             errors = validate_buf(&mem[out_offset], gold);
-            if (errors)
-                printf("  ... FAIL (%d errors)\n", errors);
-            else
-                printf("  ... PASS\n");
+            if (errors) printf("  ... FAIL (%d errors)\n", errors);
+            else printf("  ... PASS\n");
         }
         
-        /* Free allocated memory */
+        // Free memory
         aligned_free(ptable);
         aligned_free(mem);
         aligned_free(gold);
