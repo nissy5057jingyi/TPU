@@ -1,211 +1,219 @@
-// Complete alternative implementation of memory_copier_rtl_basic_dma32.v
-// This version uses parameter instead of localparam and a different approach to state handling
-
-module memory_copier_rtl_basic_dma32 (
-    clk,
-    rst,
-    dma_read_chnl_valid,
-    dma_read_chnl_data,
-    dma_read_chnl_ready,
-    /* <<--params-list-->> */
-    conf_info_data_in,
-    conf_info_enable,
-    conf_info_data_out,
-    conf_done,
-    acc_done,
-    debug,
-    dma_read_ctrl_valid,
-    dma_read_ctrl_data_index,
-    dma_read_ctrl_data_length,
-    dma_read_ctrl_data_size,
-    dma_read_ctrl_data_user,
-    dma_read_ctrl_ready,
-    dma_write_ctrl_valid,
-    dma_write_ctrl_data_index,
-    dma_write_ctrl_data_length,
-    dma_write_ctrl_data_size,
-    dma_write_ctrl_data_user,
-    dma_write_ctrl_ready,
-    dma_write_chnl_valid,
-    dma_write_chnl_data,
-    dma_write_chnl_ready
+module simple_ram64 #(
+    parameter DEPTH = 128
+)(
+    input clk,
+    input [6:0] addr,
+    input [63:0] din,
+    input we,
+    output reg [63:0] dout
 );
 
-    input clk;
-    input rst;
+    reg [63:0] mem [0:DEPTH-1];
 
-    /* <<--params-def-->> */
-    input [31:0]  conf_info_data_in;
-    input [31:0]  conf_info_enable;
-    input [31:0]  conf_info_data_out;
-    input conf_done;
+    always @(posedge clk) begin
+        if (we)
+            mem[addr] <= din;
+        dout <= mem[addr];
+    end
 
-    input dma_read_ctrl_ready;
-    output dma_read_ctrl_valid;
-    output [31:0] dma_read_ctrl_data_index;
-    output [31:0] dma_read_ctrl_data_length;
-    output [2:0] dma_read_ctrl_data_size;
-    output [4:0] dma_read_ctrl_data_user;
+endmodule
 
-    output dma_read_chnl_ready;
-    input dma_read_chnl_valid;
-    input [31:0] dma_read_chnl_data;
+module men_copier_rtl_basic_dma64 (
+    input clk,
+    input rst,
+    input conf_done,
+    input [31:0] conf_info_data_in,
+    output reg acc_done,
+    output [31:0] debug,
 
-    input dma_write_ctrl_ready;
-    output dma_write_ctrl_valid;
-    output [31:0] dma_write_ctrl_data_index;
-    output [31:0] dma_write_ctrl_data_length;
-    output [2:0] dma_write_ctrl_data_size;
-    output [4:0] dma_write_ctrl_data_user;
+    input dma_read_ctrl_ready,
+    output reg dma_read_ctrl_valid,
+    output reg [31:0] dma_read_ctrl_data_index,
+    output reg [31:0] dma_read_ctrl_data_length,
+    output [2:0] dma_read_ctrl_data_size,
+    output [5:0] dma_read_ctrl_data_user,
 
-    input dma_write_chnl_ready;
-    output dma_write_chnl_valid;
-    output [31:0] dma_write_chnl_data;
+    input dma_read_chnl_valid,
+    output dma_read_chnl_ready,
+    input [63:0] dma_read_chnl_data,
 
-    output acc_done;
-    output [31:0] debug;
+    input dma_write_ctrl_ready,
+    output reg dma_write_ctrl_valid,
+    output reg [31:0] dma_write_ctrl_data_index,
+    output reg [31:0] dma_write_ctrl_data_length,
+    output [2:0] dma_write_ctrl_data_size,
+    output [5:0] dma_write_ctrl_data_user,
 
-    // Using parameter instead of localparam - Parameters are visible across module hierarchy
-    parameter STATE_IDLE = 3'd0;
-    parameter STATE_INIT_READ = 3'd1;
-    parameter STATE_READING = 3'd2;
-    parameter STATE_INIT_WRITE = 3'd3;
-    parameter STATE_WRITING = 3'd4;
-    parameter STATE_DONE = 3'd5;
+    input dma_write_chnl_ready,
+    output dma_write_chnl_valid,
+    output [63:0] dma_write_chnl_data
+);
 
-    // DMA size encodings
-    parameter BYTE = 3'b000;   // 8-bit
-    parameter HWORD = 3'b001;  // 16-bit
-    parameter WORD = 3'b010;   // 32-bit
-    parameter DWORD = 3'b011;  // 64-bit
+    // State definitions - simplified for reliability
+    localparam IDLE = 0, START_RD = 1, WAIT_RD = 2, START_WR = 3, WAIT_WR = 4, DONE = 5;
+    reg [2:0] state_reg, state_next;
 
-    // Register declarations
-    reg [2:0] state;
-    reg [31:0] buffer [0:2047];  // Buffer for 32-bit data
-    reg [31:0] read_count;
-    reg [31:0] write_count;
-    reg [31:0] total_elements;
-    reg acc_done;
-    reg dma_read_ctrl_valid;
-    reg dma_read_chnl_ready;
-    reg dma_write_ctrl_valid;
-    reg dma_write_chnl_valid;
-    reg [31:0] dma_write_chnl_data;
-    reg [31:0] dma_read_ctrl_data_index;
-    reg [31:0] dma_read_ctrl_data_length;
-    reg [2:0] dma_read_ctrl_data_size;
-    reg [4:0] dma_read_ctrl_data_user;
-    reg [31:0] dma_write_ctrl_data_index;
-    reg [31:0] dma_write_ctrl_data_length;
-    reg [2:0] dma_write_ctrl_data_size;
-    reg [4:0] dma_write_ctrl_data_user;
-    reg [31:0] debug;
+    // Data counters
+    reg [6:0] rd_count, wr_count;
+    wire [6:0] total_words;
+    assign total_words = conf_info_data_in[0] ? conf_info_data_in[31:1] + 1 : conf_info_data_in[31:1];
 
-    // Main FSM
-    always @(posedge clk or negedge rst) begin
-        if (!rst) begin
-            // Reset state
-            state <= STATE_IDLE;
-            dma_read_ctrl_valid <= 1'b0;
-            dma_read_chnl_ready <= 1'b0;
-            dma_write_ctrl_valid <= 1'b0;
-            dma_write_chnl_valid <= 1'b0;
-            acc_done <= 1'b0;
-            debug <= 32'd0;
-            read_count <= 32'd0;
-            write_count <= 32'd0;
-            total_elements <= 32'd0;
+    // RAM I/F
+    reg ram_we;
+    reg [6:0] ram_wr_addr, ram_rd_addr;
+    reg [63:0] ram_din;
+    wire [63:0] ram_dout;
+    reg [63:0] write_data;
+
+    // RAM instance
+    simple_ram64 u_ram (
+        .clk(clk),
+        .addr((state_reg == WAIT_RD) ? ram_wr_addr : ram_rd_addr),
+        .din(ram_din),
+        .we(ram_we),
+        .dout(ram_dout)
+    );
+
+    // DMA settings
+    assign dma_read_ctrl_data_size = 3'b011;
+    assign dma_write_ctrl_data_size = 3'b011;
+    assign dma_read_ctrl_data_user = 6'b000000;
+    assign dma_write_ctrl_data_user = 6'b000000;
+
+    // DMA handshaking
+    assign dma_read_chnl_ready = (state_reg == WAIT_RD);
+    assign dma_write_chnl_valid = (state_reg == WAIT_WR);
+    assign dma_write_chnl_data = write_data;
+
+    // Debug output
+    assign debug = {28'd0, state_reg};
+
+    // State register
+    always @(posedge clk) begin
+        if (rst == 1'b0) begin
+            state_reg <= IDLE;
         end else begin
-            case (state)
-                STATE_IDLE: begin
-                    // Wait for configuration to be done
-                    if (conf_done && conf_info_enable) begin
-                        // Initialize parameters for DMA read
-                        total_elements <= conf_info_data_out * conf_info_data_out;
-                        state <= STATE_INIT_READ;
-                        debug <= 32'd1; // Debug: entered INIT_READ state
-                    end else begin
-                        acc_done <= 1'b0;
+            state_reg <= state_next;
+        end
+    end
+
+    // Next state logic - separate from outputs
+    always @(*) begin
+        state_next = state_reg;
+
+        case (state_reg)
+            IDLE: begin
+                if (conf_done) begin
+                    state_next = START_RD;
+                end
+            end
+
+            START_RD: begin
+                if (dma_read_ctrl_ready) begin
+                    state_next = WAIT_RD;
+                end
+            end
+
+            WAIT_RD: begin
+                if (rd_count >= total_words) begin
+                    state_next = START_WR;
+                end
+            end
+
+            START_WR: begin
+                if (dma_write_ctrl_ready) begin
+                    state_next = WAIT_WR;
+                end
+            end
+
+            WAIT_WR: begin
+                if (wr_count >= total_words) begin
+                    state_next = DONE;
+                end
+            end
+
+            DONE: begin
+                state_next = IDLE;
+            end
+
+            default: begin
+                state_next = IDLE;
+            end
+        endcase
+    end
+
+    // Output and datapath logic - separate from state transitions
+    always @(posedge clk) begin
+        if (rst == 1'b0) begin
+            acc_done <= 0;
+            rd_count <= 0;
+            wr_count <= 0;
+            ram_we <= 0;
+            dma_read_ctrl_valid <= 0;
+            dma_write_ctrl_valid <= 0;
+            dma_read_ctrl_data_index <= 0;
+            dma_read_ctrl_data_length <= 0;
+            dma_write_ctrl_data_index <= 0;
+            dma_write_ctrl_data_length <= 0;
+            ram_wr_addr <= 0;
+            ram_rd_addr <= 0;
+            ram_din <= 0;
+            write_data <= 0;
+        end else begin
+            // Default values
+            ram_we <= 0;
+            acc_done <= 0;
+            
+            case (state_reg)
+                IDLE: begin
+                    rd_count <= 0;
+                    wr_count <= 0;
+                    dma_read_ctrl_valid <= 0;
+                    dma_write_ctrl_valid <= 0;
+                end
+
+                START_RD: begin
+                    dma_read_ctrl_valid <= 1;
+                    dma_read_ctrl_data_index <= 0;
+                    dma_read_ctrl_data_length <= total_words;
+                end
+
+                WAIT_RD: begin
+                    dma_read_ctrl_valid <= 0;
+                    if (dma_read_chnl_valid) begin
+                        ram_din <= dma_read_chnl_data;
+                        ram_wr_addr <= rd_count;
+                        ram_we <= 1;
+                        rd_count <= rd_count + 1;
                     end
                 end
 
-                STATE_INIT_READ: begin
-                    // Setup DMA read request
-                    dma_read_ctrl_valid <= 1'b1;
-                    dma_read_ctrl_data_index <= 32'd0; // Start from offset 0
-                    dma_read_ctrl_data_length <= total_elements; // Read all elements
-                    dma_read_ctrl_data_size <= WORD; // 32-bit data
-                    dma_read_ctrl_data_user <= 5'd0; // Default user field
+                START_WR: begin
+                    dma_write_ctrl_valid <= 1;
+                    dma_write_ctrl_data_index <= 0;
+                    dma_write_ctrl_data_length <= total_words;
+                    ram_rd_addr <= 0;
+                end
+
+                WAIT_WR: begin
+                    dma_write_ctrl_valid <= 0;
                     
-                    if (dma_read_ctrl_ready && dma_read_ctrl_valid) begin
-                        // DMA read request accepted
-                        dma_read_ctrl_valid <= 1'b0;
-                        dma_read_chnl_ready <= 1'b1;
-                        state <= STATE_READING;
-                        debug <= 32'd2; // Debug: entered READING state
+                    // First data word should be pre-loaded
+                    if (state_next == WAIT_WR && state_reg == START_WR) begin
+                        write_data <= ram_dout;
                     end
-                end
-
-                STATE_READING: begin
-                    // Process incoming data
-                    if (dma_read_chnl_valid && dma_read_chnl_ready) begin
-                        // Store data in buffer
-                        buffer[read_count] <= dma_read_chnl_data;
-                        read_count <= read_count + 1;
-                        
-                        // Check if all data is read
-                        if (read_count == total_elements - 1) begin
-                            dma_read_chnl_ready <= 1'b0;
-                            state <= STATE_INIT_WRITE;
-                            debug <= 32'd3; // Debug: entered INIT_WRITE state
-                        end
-                    end
-                end
-
-                STATE_INIT_WRITE: begin
-                    // Setup DMA write request
-                    dma_write_ctrl_valid <= 1'b1;
-                    dma_write_ctrl_data_index <= total_elements; // Start writing at offset after read data
-                    dma_write_ctrl_data_length <= total_elements; // Write all elements
-                    dma_write_ctrl_data_size <= WORD; // 32-bit data
-                    dma_write_ctrl_data_user <= 5'd0; // Default user field
                     
-                    if (dma_write_ctrl_ready && dma_write_ctrl_valid) begin
-                        // DMA write request accepted
-                        dma_write_ctrl_valid <= 1'b0;
-                        state <= STATE_WRITING;
-                        debug <= 32'd4; // Debug: entered WRITING state
+                    // Update on write channel ready
+                    if (dma_write_chnl_ready) begin
+                        wr_count <= wr_count + 1;
+                        ram_rd_addr <= wr_count + 1;
+                        // Load next data on next cycle
+                        write_data <= ram_dout;
                     end
                 end
 
-                STATE_WRITING: begin
-                    // Send data to be written
-                    dma_write_chnl_valid <= 1'b1;
-                    dma_write_chnl_data <= buffer[write_count];
-                    
-                    if (dma_write_chnl_ready && dma_write_chnl_valid) begin
-                        write_count <= write_count + 1;
-                        
-                        // Check if all data is written
-                        if (write_count == total_elements - 1) begin
-                            dma_write_chnl_valid <= 1'b0;
-                            state <= STATE_DONE;
-                            debug <= 32'd5; // Debug: entered DONE state
-                        end
-                    end
-                end
-
-                STATE_DONE: begin
-                    // Signal completion
-                    acc_done <= 1'b1;
-                    state <= STATE_IDLE;
-                    read_count <= 32'd0;
-                    write_count <= 32'd0;
-                    debug <= 32'd0;
-                end
-
-                default: begin
-                    state <= STATE_IDLE;
+                DONE: begin
+                    acc_done <= 1;
                 end
             endcase
         end
