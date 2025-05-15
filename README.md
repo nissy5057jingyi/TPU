@@ -30,17 +30,3 @@ For FPGA:
 ```bash
 make fpga-run
 ```
-
-## Status
-
-✅ RTL and ESP integration
-✅ DMA + APB testbench validation
-⚠️ Partial end-to-end simulation
-⚠️ APB timing refinement pending
-
-## Next Steps
-
-* Finalize full-pipeline simulation
-* Add interrupts / timeout handling
-* Extend for deeper networks (e.g., attention layers)
-
