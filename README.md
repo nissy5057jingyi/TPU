@@ -44,7 +44,7 @@ To run the TPU and mem_copier accelerators within the ESP platform, follow these
 # Navigate to the ESP platform for your board
 cd <esp>/socs/xilinx-vc707-xc7vx485t
 
-# Build HLS modules (if applicable)
+# Build HLS modules 
 make example_rtl-hls
 
 # Configure the SoC to include your RTL accelerators
@@ -55,3 +55,4 @@ make example_rtl-baremetal
 
 # Run RTL simulation using ModelSim
 TEST_PROGRAM=./soft-build/<cpu>/baremetal/example_rtl.exe make sim
+ 
