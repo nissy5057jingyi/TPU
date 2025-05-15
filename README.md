@@ -13,7 +13,7 @@ This project integrates a TPU-like accelerator into the [ESP framework](https://
 - APB-mapped control/status registers (CSR)
 - Pooling, activation (ReLU/Tanh), normalization
 - Modular RTL with standalone and ESP integration
-- Fully validated with DMA + C-based testbench
+- DMA interaction and System-level C testbench
 
 ## Usage (ESP on VC707)
 
