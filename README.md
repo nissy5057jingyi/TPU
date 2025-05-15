@@ -1,6 +1,3 @@
-Here's a **short, effective `README.md`** version that includes your project summary, key features, usage, and next steps—formatted for clarity:
-
-````markdown
 # TPU Accelerator for ESP
 
 This project integrates a TPU-like accelerator into the [ESP framework](https://www.esp.cs.columbia.edu/) with:
