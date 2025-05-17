@@ -55,4 +55,7 @@ make example_rtl-baremetal
 
 # Run RTL simulation using ModelSim
 TEST_PROGRAM=./soft-build/<cpu>/baremetal/example_rtl.exe make sim
+
+#Run matrix multiplication using modelsim,download TPU zip fille and execute in qsim file, top
+./run.sh  
  
